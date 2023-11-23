@@ -10,18 +10,16 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body class="antialiased">
-    <div class="min-h-screen">
-        <livewire:layout.navigation />
-        
-        <!-- Page Content -->
-        <main class="mt-[var(--navbar-height)] py-4 px-8">
-            <!-- Page Heading -->
-            {{ $slot }}
-        </main>
-    </div>
+    <livewire:layout.navigation />
+    
+    <!-- Page Content -->
+    <main class="mt-[var(--navbar-height)] py-4">
+        {{ $slot }}
+    </main>
 </body>
 
 </html>

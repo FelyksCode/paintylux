@@ -10,8 +10,8 @@ $logout = function (Logout $logout) {
 
 ?>
 
-<nav x-data="{ open: false }"
-    class="fixed top-0 left-0 z-[1] w-screen h-[var(--navbar-height) border-b-[rgb(var(--fg-rgb))] backdrop-blur-md">
+<nav id="navbar" x-data="{ open: false }"
+    class="fixed top-0 left-0 z-[1] w-screen h-[var(--navbar-height) smooth backdrop-blur-md">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div class="flex justify-between h-16 w-full">
@@ -19,7 +19,7 @@ $logout = function (Logout $logout) {
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('index') }}" wire:navigate>
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo id="navlogo" class="block h-9 w-auto fill-current" />
                     </a>
                 </div>
 
@@ -84,7 +84,8 @@ $logout = function (Logout $logout) {
             <!-- Hamburger -->
             <div class="-me-2 flex items-center min-[850px]:hidden">
                 <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out">
+                    id="hamburger"
+                    class="inline-flex items-center justify-center p-2 rounded-md text-[rgba(var(--fg-rgb),0.7)] hover:text-[rgb(var(--fg-rgb))] focus:outline-none focus:text-[rgba(var(--fg-rgb),0.7)] smooth">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -121,11 +122,11 @@ $logout = function (Logout $logout) {
 
         @auth
             <!-- Responsive Settings Options -->
-            <div class="pt-4 pb-1 border-t border-gray-200">
+            <div class="pt-4 pb-1 border-t border-gray-200 navlink smooth">
                 <div class="px-4">
-                    <div class="font-medium text-base text-gray-800" x-data="{ name: '{{ auth()->user()->name }}' }" x-text="name"
+                    <div class="font-medium text-base" x-data="{ name: '{{ auth()->user()->name }}' }" x-text="name"
                         x-on:profile-updated.window="name = $event.detail.name"></div>
-                    <div class="font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>
+                    <div class="font-medium text-sm opacity-60">{{ auth()->user()->email }}</div>
                 </div>
 
                 <div class="mt-3 space-y-1">
