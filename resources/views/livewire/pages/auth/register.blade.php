@@ -19,11 +19,11 @@ layout('layouts.app');
 form(RegisterForm::class);
 
 $register = function () {
-    $validated = $this->validate();
+    $validated = $this->form->validate();
 
     $validated['password'] = Hash::make($validated['password']);
 
-    event(new Registered($user = User::create($validated)));
+    event(new Registered(($user = User::create($validated))));
 
     Auth::login($user);
 
@@ -34,7 +34,7 @@ $register = function () {
 
 <section class="auth-section">
     <!-- Header -->
-    <div class="text-2xl min-[360px]:text-3xl sm:text-4xl font-bold text-center">
+    <div class="text-center text-2xl font-bold min-[360px]:text-3xl sm:text-4xl">
         {{ __('Gabung dengan kami') }}
     </div>
 
@@ -42,41 +42,46 @@ $register = function () {
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Nama')" />
-            <x-text-input wire:model="form.name" id="name" class="block mt-1 w-full" type="text" name="name" autofocus autocomplete="name" wire:model.live.debounce.0ms="form.name" />
-            @error('form.name')<x-input-error :messages="$message" class="mt-2" />@enderror
+            <x-text-input wire:model="form.name" id="name" class="mt-1 block w-full" type="text" name="name"
+                autofocus autocomplete="name" wire:model.live.debounce.0ms="form.name" />
+            @error('form.name')
+                <x-input-error :messages="$message" class="mt-2" />
+            @enderror
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="form.email" id="email" class="block mt-1 w-full" type="text" name="email" autocomplete="username" wire:model.live.debounce.0ms="form.email" />
-            @error('form.email')<x-input-error :messages="$message" class="mt-2" />@enderror
+            <x-text-input wire:model="form.email" id="email" class="mt-1 block w-full" type="text" name="email"
+                autocomplete="username" wire:model.live.debounce.0ms="form.email" />
+            @error('form.email')
+                <x-input-error :messages="$message" class="mt-2" />
+            @enderror
         </div>
 
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input wire:model="form.password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            autocomplete="new-password" 
-                            wire:model.live.debounce.0ms="form.password" />
+            <x-text-input wire:model="form.password" id="password" class="mt-1 block w-full" type="password"
+                name="password" autocomplete="new-password" wire:model.live.debounce.0ms="form.password" />
 
-            @error('form.password')<x-input-error :messages="$message" class="mt-2" />@enderror
+            @error('form.password')
+                <x-input-error :messages="$message" class="mt-2" />
+            @enderror
         </div>
 
         <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
 
-            <x-text-input wire:model="form.password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation"    
-                            autocomplete="new-password" 
-                            wire:model.live.debounce.0ms="form.password_confirmation" />
+            <x-text-input wire:model="form.password_confirmation" id="password_confirmation" class="mt-1 block w-full"
+                type="password" name="password_confirmation" autocomplete="new-password"
+                wire:model.live.debounce.0ms="form.password_confirmation" />
 
-            @error('form.password_confirmation')<x-input-error :messages="$message" class="mt-2" />@enderror
+            @error('form.password_confirmation')
+                <x-input-error :messages="$message" class="mt-2" />
+            @enderror
         </div>
 
         <x-primary-button class="mt-4">
