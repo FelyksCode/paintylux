@@ -25,6 +25,9 @@ Route::view('/produk', 'products.index')
 Route::view('/proyek', 'projects.index')
     ->name('projects');
 
+Route::view('/kontak', 'contact')
+    ->name('contact');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

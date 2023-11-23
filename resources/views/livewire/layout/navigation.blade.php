@@ -19,7 +19,7 @@ $logout = function (Logout $logout) {
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('index') }}" wire:navigate>
-                        <x-application-logo id="navlogo" class="block h-9 w-auto fill-current" />
+                        <x-application-logo id="navlogo" class="block fill-current" />
                     </a>
                 </div>
 
@@ -33,6 +33,9 @@ $logout = function (Logout $logout) {
                     </x-nav-link>
                     <x-nav-link :href="route('projects')" :active="request()->routeIs('projects')" wire:navigate>
                         {{ __('Proyek') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')" wire:navigate>
+                        {{ __('Kontak') }}
                     </x-nav-link>
                     @if (!Auth::check())
                         <x-nav-link :href="route('login')" :active="request()->routeIs('login')" wire:navigate>
@@ -109,6 +112,9 @@ $logout = function (Logout $logout) {
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('projects')" :active="request()->routeIs('projects')" wire:navigate>
                 {{ __('Proyek') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('contact')" :active="request()->routeIs('contact')" wire:navigate>
+                {{ __('Kontak') }}
             </x-responsive-nav-link>
             @if (!Auth::check())
                 <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')" wire:navigate>

@@ -225,4 +225,25 @@
     .std-section {
         @apply max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8;
     }
+
+    /* ANIMATION */
+    .float {
+        @apply [animation:float_6s_ease-in-out_infinite];
+    }
+}
+
+/* FLOATING ANIMATION */
+@keyframes float {
+    0% {
+        filter: drop-shadow(5px 15px 5px rgba(0, 0, 0, 0.4));
+        transform: translateY(0px) rotate(12deg);
+    }
+    50% {
+        filter: drop-shadow(25px 15px 10px rgba(0, 0, 0, 0.2));
+        transform: translateY(-20px) rotate(9deg);
+    }
+    100% {
+        filter: drop-shadow(5px 15px 5px rgba(0, 0, 0, 0.4));
+        transform: translateY(0px) rotate(12deg);
+    }
 }
