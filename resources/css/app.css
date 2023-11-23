@@ -221,4 +221,8 @@
     .auth-section {
         @apply flex flex-col items-center space-y-4;
     }
+
+    .std-section {
+        @apply max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8;
+    }
 }

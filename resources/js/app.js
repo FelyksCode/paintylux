@@ -33,14 +33,14 @@ $(document).ready(() => {
         // Dynamic styling
         if (distance > threshold) {
             $("#navbar").attr("class", coloredNavbar);
-            $("#navlogo").addClass(whiteText);
+            $("#navlogo").attr("src", "/assets/logo-white.png");
             $(".navlink").each(function () {
                 $(this).addClass(coloredNavlink);
             });
             $("#hamburger").attr("class", coloredHamburger);
         } else {
             $("#navbar").attr("class", plainNavbar);
-            $("#navlogo").removeClass(whiteText);
+            $("#navlogo").attr("src", "/assets/logo-red.png");
             $(".navlink").each(function () {
                 $(this).removeClass(coloredNavlink);
             });
