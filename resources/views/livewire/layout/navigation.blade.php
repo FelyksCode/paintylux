@@ -21,13 +21,15 @@ $logout = function (Logout $logout) {
                     <a href="{{ route('index') }}" wire:navigate>
                         <x-application-logo id="navlogo" class="block fill-current" />
                     </a>
+                    @auth
+                        @if (auth()->user()->is_admin)
+                            <div class="text-inactive text-upperwide ml-3 text-sm">Admin</div>
+                        @endif
+                    @endauth
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 min-[850px]:-my-px min-[850px]:ms-10 min-[850px]:flex">
-                    <x-nav-link :href="route('about-us')" :active="request()->routeIs('about-us')" wire:navigate>
-                        {{ __('Tentang Kami') }}
-                    </x-nav-link>
                     <x-nav-link :href="route('products')" :active="request()->routeIs('products')" wire:navigate>
                         {{ __('Produk') }}
                     </x-nav-link>
@@ -103,9 +105,6 @@ $logout = function (Logout $logout) {
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden min-[850px]:hidden">
         <div class="space-y-1 pb-3 pt-2">
-            <x-responsive-nav-link :href="route('about-us')" :active="request()->routeIs('about-us')" wire:navigate>
-                {{ __('Tentang Kami') }}
-            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('products')" :active="request()->routeIs('products')" wire:navigate>
                 {{ __('Produk') }}
             </x-responsive-nav-link>

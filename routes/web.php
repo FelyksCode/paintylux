@@ -16,9 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'index')
     ->name('index');
 
-Route::view('/tentang-kami', 'about-us')
-    ->name('about-us');
-
 Route::view('/produk', 'products.index')
     ->name('products');
 
