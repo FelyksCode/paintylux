@@ -25,9 +25,8 @@ Route::view('/proyek', 'projects.index')
 Route::view('/kontak', 'contact')
     ->name('contact');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::view('/checkout', 'checkout')
+    ->name('checkout');
 
 Route::view('profile', 'profile')
     ->middleware(['auth', 'verified'])
