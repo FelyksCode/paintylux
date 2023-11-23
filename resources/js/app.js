@@ -31,6 +31,11 @@ $(document).ready(() => {
         const distance = $(window).scrollTop();
 
         // Dynamic styling
+        // distance > threshold
+        //     ? $("#navbar").addClass("border-b border-b-[rgb(var(--gray-rgb))]")
+        //     : $("#navbar").removeClass(
+        //           "border-b border-b-[rgb(var(--gray-rgb))]"
+        //       );
         if (distance > threshold) {
             $("#navbar").attr("class", coloredNavbar);
             $("#navlogo").attr("src", "/assets/logo-white.png");

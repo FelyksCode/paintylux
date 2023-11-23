@@ -6,4 +6,5 @@
     Paintylux
 </div> --}}
 
-<img src="{{ asset('/assets/logo-red.png') }}" alt="Paintylux Logo" priority="high" {{ $attributes->merge(["class" => "w-[210px] h-auto object-cover"]) }}>
+<img src="{{ asset('/assets/logo-red.png') }}" alt="Paintylux Logo" priority="high"
+    {{ $attributes->merge(['class' => 'w-[210px] h-auto object-cover']) }}>
