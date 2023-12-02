@@ -12,14 +12,13 @@ use Livewire\Form;
 
 class LoginForm extends Form
 {
-    #[Validate('required', message: 'Mohon mengisi email Anda.')]
-    #[Validate('email', message: 'Mohon mengisi email yang valid.')]
+    #[Validate]
     public string $email = '';
 
-    #[Validate('required', message: 'Mohon mengisi password Anda.')]
+    #[Validate]
     public string $password = '';
 
-    #[Validate('boolean')]
+    #[Validate]
     public bool $remember = false;
 
     /**
@@ -27,6 +26,22 @@ class LoginForm extends Form
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+    // Custom error messages
+    protected $messages = [
+        'email.required' => 'Mohon mengisi email Anda.',
+        'email.regex' => 'Mohon mengisi email yang valid.',
+        'password.required' => 'Mohon mengisi password Anda.',
+    ];
+
+    public function rules()
+    {
+        return [
+            'email' => ['required', 'regex:' . config("const.REGEXP.email")],
+            'password' => 'required',
+            'remember' => 'boolean',
+        ];
+    }
 
     public function authenticate(): void
     {

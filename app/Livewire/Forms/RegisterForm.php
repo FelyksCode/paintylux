@@ -27,7 +27,7 @@ class RegisterForm extends Form
         'name.max' => 'Nama yang diisi terlalu panjang.',
         'email.required' => 'Mohon mengisi email Anda.',
         'email.lowercase' => 'Email tidak boleh ada huruf kapital.',
-        'email.email' => 'Mohon mengisi email yang valid.',
+        'email.regex' => 'Mohon mengisi email yang valid.',
         'email.max' => 'Email yang diisi terlalu panjang.',
         'email.unique' => 'Email sudah terpakai.',
         'password' => 'Password Anda harus minimal 8 karakter.',
@@ -39,7 +39,7 @@ class RegisterForm extends Form
     {
         return [
             'name' => ['required', 'string', 'max:50'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'regex:' . config("const.REGEXP.email"), 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', Rules\Password::defaults()],
             'password_confirmation' => 'same:password',
         ];

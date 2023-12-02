@@ -24,7 +24,7 @@ Route::view('produk', 'products.index')
 Route::view('proyek', 'projects.index')
     ->name('projects');
 
-Route::view('kontak', 'contact')
+Volt::route('kontak', 'contact')
     ->name('contact');
 
 Route::view('checkout', 'checkout')

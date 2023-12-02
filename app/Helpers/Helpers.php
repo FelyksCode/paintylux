@@ -4,10 +4,22 @@ function error_message($attribute, $error = "required")
 {
     switch ($error) {
         case "required":
-            return "Mohon mengisi $attribute Anda.";
-        case "valid":
-            return "Mohon mengisi $attribute yang valid.";
+            $message = "Mohon mengisi $attribute Anda.";
+            break;
+        case "max":
+            $message = ucfirst($attribute) . " yang diisi terlalu panjang.";
+            break;
+        case "unique":
+            $message = ucfirst($attribute) . " sudah terpakai.";
+            break;
+        case "lowercase":
+            $message = ucfirst($attribute) . " tidak boleh ada huruf kapital.";
+            break;
+        case "same":
+            $message = ucfirst($attribute) . " yang diisi belum sama.";
+            break;
         default:
-            return ucfirst($attribute) . " tidak valid.";
+            $message = "Mohon mengisi $attribute yang valid.";
     }
+    return trans($message);
 }

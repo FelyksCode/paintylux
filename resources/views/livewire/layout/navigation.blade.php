@@ -58,7 +58,7 @@ $logout = function (Logout $logout) {
 
             <!-- Auth links -->
             @if (!Auth::check())
-                <div class="flex items-center space-x-4">
+                <div class="hidden items-center space-x-4 min-[850px]:flex">
                     <a href="{{ route('login') }}">
                         <x-secondary-button
                             class="{{ request()->routeIs('login') ? 'ring-2 ring-offset-2 ring-[rgb(var(--fg-rgb))]' : '' }} smooth h-fit !border-[rgb(var(--fg-rgb))] !bg-transparent text-[rgb(var(--fg-rgb))] shadow-none hover:opacity-75 focus:outline-[rgb(var(--fg-rgb))] focus:!ring-[rgb(var(--fg-rgb))]">

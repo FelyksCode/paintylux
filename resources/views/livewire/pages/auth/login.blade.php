@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Session;
 
 use function Livewire\Volt\form;
 use function Livewire\Volt\layout;
-use function Livewire\Volt\{state, rule};
 
 layout('layouts.app');
 
@@ -24,7 +23,7 @@ $login = function () {
 
 ?>
 
-<section class="auth-section" x-show x-transition>
+<section class="auth-section">
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
