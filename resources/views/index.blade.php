@@ -12,7 +12,8 @@
             </div>
         </div>
 
-        <div class="relative flex h-[350px] w-full items-center justify-center space-x-14">
+        <div class="relative flex h-[350px] w-full items-center justify-center space-x-14 opacity-0"
+            x-intersect="$el.classList.add('float-in-up')">
             <!-- Hero -->
             <img src="{{ asset('assets/products/exterior-interior.png') }}" alt="Paint Bucket"
                 class="float z-[1] w-[200px] min-[1000px]:w-[250px] min-[1300px]:w-[300px]">
@@ -42,10 +43,10 @@
         <hr class="border border-[rgba(var(--fg-rgb),0.2)]">
 
         <!-- Products -->
-        <div>
+        <div class="opacity-0" x-intersect="$el.classList.add('float-in-up')">
             <div class="flex flex-col items-center space-y-6 text-center text-3xl font-light tracking-tighter">
                 <div class="max-w-[600px]">
-                    {{ __('Cat tembok berkualitas tinggi dengan pilihan warna-warna yang indah') }}
+                    {{ __('Cat tembok berkualitas tinggi dengan berbagai pilihan warna yang indah') }}
                 </div>
                 <div class="flex items-center space-x-12">
                     <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--green-rgb))]"></div>
@@ -63,7 +64,7 @@
         <hr class="border border-[rgba(var(--fg-rgb),0.2)]">
 
         <!-- Projects -->
-        <div>
+        <div class="opacity-0" x-intersect="$el.classList.add('float-in-up')">
             <div class="flex flex-col items-center space-y-6 text-center text-3xl font-light tracking-tighter">
                 <div class="max-w-[600px]">
                     {{ __('Paintylux telah digunakan dalam banyak proyek') }}

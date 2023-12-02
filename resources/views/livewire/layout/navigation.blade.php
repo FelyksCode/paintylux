@@ -10,7 +10,8 @@ $logout = function (Logout $logout) {
 
 ?>
 
-<nav id="navbar" x-data="{ open: false, threshold: 10, overThreshold: (window.pageYOffset > this.threshold), evalThreshold() { this.overThreshold = window.pageYOffset > this.threshold } }" @scroll.window="evalThreshold"
+<nav id="navbar" x-data="{ open: false, overThreshold: (window.pageYOffset > 10) }" @scroll.window="overThreshold = window.pageYOffset > 10"
+    @resize.window="open = window.innerWidth >= 850 ? false : open"
     class="h-[var(--navbar-height) smooth fixed left-0 top-0 z-[2] w-screen"
     :class="(open || overThreshold) &&
     'bg-[rgba(var(--bg-rgb),0.6)] backdrop-blur-lg border-b border-b-[rgba(var(--fg-rgb),0.6)]'">
@@ -19,30 +20,29 @@ $logout = function (Logout $logout) {
         <div class="flex h-16 w-full justify-between">
             <div class="flex">
                 <!-- Logo -->
-                <div class="flex shrink-0 items-center">
+                <div class="float-in-down flex shrink-0 items-center opacity-0">
                     <a href="{{ route('index') }}" wire:navigate class="flex items-center space-x-3">
                         <x-application-logo id="navlogo" class="block fill-current" />
-                        {{-- @auth
-                            @if (auth()->user()->is_admin)
-                                <div class="text-inactive text-upperwide text-sm">Admin</div>
-                            @endif
-                        @endauth --}}
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 min-[850px]:-my-px min-[850px]:ms-10 min-[850px]:flex">
-                    <x-nav-link :href="route('products')" :active="request()->routeIs('products')" wire:navigate>
+                    <x-nav-link :href="route('products')" :active="request()->routeIs('products')" wire:navigate
+                        class="float-in-down opacity-0 [animation-delay:0.2s]">
                         {{ __('Produk') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('projects')" :active="request()->routeIs('projects')" wire:navigate>
+                    <x-nav-link :href="route('projects')" :active="request()->routeIs('projects')" wire:navigate
+                        class="float-in-down opacity-0 [animation-delay:0.4s]">
                         {{ __('Proyek') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')" wire:navigate>
+                    <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')" wire:navigate
+                        class="float-in-down opacity-0 [animation-delay:0.6s]">
                         {{ __('Hubungi Kami') }}
                     </x-nav-link>
                     @auth
-                        <x-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate>
+                        <x-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate
+                            class="float-in-down opacity-0 [animation-delay:0.8s]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="h-5 w-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -59,30 +59,25 @@ $logout = function (Logout $logout) {
             <!-- Auth links -->
             @if (!Auth::check())
                 <div class="hidden items-center space-x-4 min-[850px]:flex">
-                    <a href="{{ route('login') }}">
+                    <a href="{{ route('login') }}" class="float-in-down opacity-0 [animation-delay:1s]">
                         <x-secondary-button
                             class="{{ request()->routeIs('login') ? 'ring-2 ring-offset-2 ring-[rgb(var(--fg-rgb))]' : '' }} smooth h-fit !border-[rgb(var(--fg-rgb))] !bg-transparent text-[rgb(var(--fg-rgb))] shadow-none hover:opacity-75 focus:outline-[rgb(var(--fg-rgb))] focus:!ring-[rgb(var(--fg-rgb))]">
                             {{ __('Masuk') }}
                         </x-secondary-button>
                     </a>
-                    <a href="{{ route('register') }}">
+                    <a href="{{ route('register') }}" class="float-in-down opacity-0 [animation-delay:1.2s]">
                         <x-danger-button
                             class="{{ request()->routeIs('register') ? 'ring-2 ring-offset-2 ring-[rgb(var(--acc-rgb))]' : '' }} h-fit shadow-none">
                             {{ __('Daftar') }}
                         </x-danger-button>
                     </a>
-                    {{-- <x-nav-link :href="route('login')" :active="request()->routeIs('login')" wire:navigate>
-                        {{ __('Masuk') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('register')" :active="request()->routeIs('register')" wire:navigate>
-                        {{ __('Daftar') }}
-                    </x-nav-link> --}}
                 </div>
             @endif
 
             <!-- Settings Dropdown -->
             @auth
-                <div class="hidden min-[850px]:ms-6 min-[850px]:flex min-[850px]:items-center">
+                <div
+                    class="float-in-down hidden opacity-0 [animation-delay:1.4s] min-[850px]:ms-6 min-[850px]:flex min-[850px]:items-center">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
@@ -119,16 +114,24 @@ $logout = function (Logout $logout) {
             @endauth
 
             <!-- Hamburger -->
-            <div class="-me-2 flex items-center min-[850px]:hidden">
-                <button @click="open = ! open" id="hamburger"
-                    class="smooth inline-flex items-center justify-center rounded-md p-2 text-[rgba(var(--fg-rgb),0.7)] hover:text-[rgb(var(--fg-rgb))] focus:text-[rgba(var(--fg-rgb),0.7)] focus:outline-none">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+            <div class="float-in-down flex items-center opacity-0 [animation-delay:0.2s] min-[850px]:hidden">
+                <button @click="open = ! open" :data-state="open ? 'opened' : 'closed'" id="hamburger"
+                    class="hamburger-btn smooth -mt-1 inline-flex items-center justify-center rounded-md p-2 text-[rgba(var(--fg-rgb),0.7)] hover:text-[rgb(var(--fg-rgb))] focus:text-[rgba(var(--fg-rgb),0.7)] focus:outline-none">
+                    <svg stroke="rgb(var(--black-rgb))" class="hamburger" viewBox="0 0 100 100" width="30">
+                        <line class="line top" x1="90" x2="10" y1="40" y2="40"
+                            stroke-width="5" stroke-linecap="round" stroke-dasharray="80" stroke-dashoffset="0">
+                        </line>
+                        <line class="line bottom" x1="10" x2="90" y1="60" y2="60"
+                            stroke-width="5" stroke-linecap="round" stroke-dasharray="80" stroke-dashoffset="0">
+                        </line>
+                    </svg>
+                    {{-- <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    </svg> --}}
                 </button>
             </div>
         </div>

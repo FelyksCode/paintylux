@@ -56,81 +56,6 @@
     form {
         @apply w-full px-4 sm:px-0 sm:max-w-md;
     }
-
-    /* nav {
-        @apply fixed top-0 left-0 w-screen h-[var(--navbar-height)] 
-                flex smooth
-                px-6 min-[300px]:px-8 min-[400px]:px-12 
-                py-4 justify-between items-center
-                text-lg z-[100]
-                bg-[rgba(var(--bg-rgb),0.7)]
-                backdrop-blur-md;
-    }
-
-    main {
-        @apply px-6 min-[300px]:px-8 min-[400px]:px-12  
-                py-8 mt-[var(--navbar-height)]
-                overflow-x-hidden
-                min-h-[calc(100vh-var(--navbar-height))]
-                smooth duration-500;
-    }
-
-    form {
-        @apply w-full
-                min-[700px]:w-[600px]
-                space-y-6;
-    }
-
-    label {
-        @apply text-upperwide;
-    }
-
-    input {
-        @apply focus:outline-none;
-    }
-
-    input[type="text"],
-    input[type="password"],
-    input[type="number"] {
-        @apply border-b 
-                border-[rgb(var(--fg-rgb))] 
-                bg-transparent p-1;
-    }
-
-    input[type="date"] {
-        @apply w-full font-normal uppercase
-                rounded-lg py-2 px-5
-                text-[rgb(var(--black-rgb))];
-    }
-
-    input[type="file"] {
-        @apply hidden absolute;
-    }
-
-    select {
-        @apply bg-transparent focus:outline-none
-                py-2 px-3
-                rounded-lg border border-[rgb(var(--fg-rgb))];
-    }
-
-    option {
-        @apply text-[rgb(var(--black-rgb))];
-    }
-
-    textarea {
-        @apply w-full bg-transparent p-3
-                border border-[rgb(var(--fg-rgb))]
-                focus:outline-none
-                rounded-lg resize-none;
-    }
-
-    button {
-        @apply px-4 py-2 
-                border border-[rgb(var(--fg-rgb))] text-[rgb(var(--fg-rgb))]
-                rounded-lg text-upperwide w-full smooth
-                hover:bg-[rgb(var(--fg-rgb))] hover:text-[rgb(var(--bg-rgb))]
-                cursor-pointer;
-    } */
 }
 
 @layer utilities {
@@ -232,11 +157,25 @@
 
     /* ANIMATION */
     .float {
-        @apply [animation:float_6s_ease-in-out_infinite];
+        animation: float 6s ease-in-out infinite;
     }
 
     .pulse {
-        @apply [animation:pulse_10s_linear_infinite];
+        animation: pulse 10s linear infinite;
+    }
+
+    .slide-in-left {
+        -webkit-animation: slide-in-left 1.5s
+            cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        animation: slide-in-left 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+
+    .float-in-up {
+        animation: float-in-up 1.5s ease-out both;
+    }
+
+    .float-in-down {
+        animation: float-in-down 1.5s ease-out both;
     }
 }
 
@@ -256,6 +195,7 @@
     }
 }
 
+/* PULSING ANIMATION */
 @keyframes pulse {
     0% {
         transform: scale(0.7);
@@ -274,5 +214,53 @@
     100% {
         transform: scale(2);
         opacity: 0;
+    }
+}
+
+/* SLIDE IN LEFT ANIMATION */
+@-webkit-keyframes slide-in-left {
+    0% {
+        -webkit-transform: translateX(-1000px);
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes slide-in-left {
+    0% {
+        -webkit-transform: translateX(-1000px);
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* FLOAT IN ANIMATION */
+@keyframes float-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes float-in-down {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

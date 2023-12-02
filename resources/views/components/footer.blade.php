@@ -13,9 +13,10 @@
         <hr class="border border-[rgb(var(--white-rgb))]">
 
         <!-- Information -->
-        <div class="flex justify-between">
+        <div class="flex flex-col space-y-6 min-[500px]:flex-row min-[500px]:justify-between min-[500px]:space-y-0">
             <!-- Contact -->
-            <div class="flex w-1/2 justify-between">
+            <div
+                class="flex flex-col space-y-6 min-[950px]:w-[60%] min-[950px]:flex-row min-[950px]:justify-between min-[950px]:space-y-0">
                 <!-- Address -->
                 <div class="flex flex-col space-y-2">
                     <div class="text-upperwide font-bold">
@@ -55,7 +56,7 @@
             </div>
 
             <!-- Links -->
-            <div class="flex flex-col items-end space-y-2">
+            <div class="flex flex-col space-y-2 min-[500px]:items-end min-[950px]:w-[40%]">
                 <a href="{{ route('index') }}" class="text-upperwide smooth font-bold hover:opacity-80">
                     {{ __('Beranda') }}
                 </a>
