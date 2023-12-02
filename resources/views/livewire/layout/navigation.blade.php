@@ -10,20 +10,23 @@ $logout = function (Logout $logout) {
 
 ?>
 
-<nav id="navbar" x-data="{ open: false }" class="h-[var(--navbar-height) smooth fixed left-0 top-0 z-[2] w-screen">
+<nav id="navbar" x-data="{ open: false, threshold: 10, overThreshold: (window.pageYOffset > this.threshold), evalThreshold() { this.overThreshold = window.pageYOffset > this.threshold } }" @scroll.window="evalThreshold"
+    class="h-[var(--navbar-height) smooth fixed left-0 top-0 z-[2] w-screen"
+    :class="(open || overThreshold) &&
+    'bg-[rgba(var(--bg-rgb),0.6)] backdrop-blur-lg border-b border-b-[rgba(var(--fg-rgb),0.6)]'">
     <!-- Primary Navigation Menu -->
     <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 w-full justify-between">
-            <div class="flex w-full justify-between">
+            <div class="flex">
                 <!-- Logo -->
                 <div class="flex shrink-0 items-center">
                     <a href="{{ route('index') }}" wire:navigate class="flex items-center space-x-3">
                         <x-application-logo id="navlogo" class="block fill-current" />
-                        @auth
+                        {{-- @auth
                             @if (auth()->user()->is_admin)
                                 <div class="text-inactive text-upperwide text-sm">Admin</div>
                             @endif
-                        @endauth
+                        @endauth --}}
                     </a>
                 </div>
 
@@ -36,7 +39,7 @@ $logout = function (Logout $logout) {
                         {{ __('Proyek') }}
                     </x-nav-link>
                     <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')" wire:navigate>
-                        {{ __('Kontak') }}
+                        {{ __('Hubungi Kami') }}
                     </x-nav-link>
                     @auth
                         <x-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate>
@@ -50,52 +53,70 @@ $logout = function (Logout $logout) {
                                 0</div>
                         </x-nav-link>
                     @endauth
-                    @if (!Auth::check())
-                        <x-nav-link :href="route('login')" :active="request()->routeIs('login')" wire:navigate>
-                            {{ __('Masuk') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')" wire:navigate>
-                            {{ __('Daftar') }}
-                        </x-nav-link>
-                    @endif
-                    <!-- Settings Dropdown -->
-                    @auth
-                        <div class="hidden min-[850px]:ms-6 min-[850px]:flex min-[850px]:items-center">
-                            <x-dropdown align="right" width="48">
-                                <x-slot name="trigger">
-                                    <button
-                                        class="inline-flex items-center rounded-md border border-transparent bg-[rgb(var(--fg-rgb))] px-3 py-2 text-sm font-medium leading-4 text-[rgb(var(--bg-rgb))] transition duration-150 ease-in-out hover:text-[rgba(var(--bg-rgb),0.85)] focus:outline-none">
-                                        <div x-data="{ name: '{{ auth()->user()->name }}' }" x-text="name"
-                                            x-on:profile-updated.window="name = $event.detail.name"></div>
-
-                                        <div class="ms-1">
-                                            <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                    </button>
-                                </x-slot>
-
-                                <x-slot name="content">
-                                    <x-dropdown-link :href="route('profile')" wire:navigate>
-                                        {{ __('Profile') }}
-                                    </x-dropdown-link>
-
-                                    <!-- Authentication -->
-                                    <button wire:click="logout" class="w-full text-start">
-                                        <x-dropdown-link>
-                                            {{ __('Log Out') }}
-                                        </x-dropdown-link>
-                                    </button>
-                                </x-slot>
-                            </x-dropdown>
-                        </div>
-                    @endauth
                 </div>
             </div>
+
+            <!-- Auth links -->
+            @if (!Auth::check())
+                <div class="flex items-center space-x-4">
+                    <a href="{{ route('login') }}">
+                        <x-secondary-button
+                            class="{{ request()->routeIs('login') ? 'ring-2 ring-offset-2 ring-[rgb(var(--fg-rgb))]' : '' }} smooth h-fit !border-[rgb(var(--fg-rgb))] !bg-transparent text-[rgb(var(--fg-rgb))] shadow-none hover:opacity-75 focus:outline-[rgb(var(--fg-rgb))] focus:!ring-[rgb(var(--fg-rgb))]">
+                            {{ __('Masuk') }}
+                        </x-secondary-button>
+                    </a>
+                    <a href="{{ route('register') }}">
+                        <x-danger-button
+                            class="{{ request()->routeIs('register') ? 'ring-2 ring-offset-2 ring-[rgb(var(--acc-rgb))]' : '' }} h-fit shadow-none">
+                            {{ __('Daftar') }}
+                        </x-danger-button>
+                    </a>
+                    {{-- <x-nav-link :href="route('login')" :active="request()->routeIs('login')" wire:navigate>
+                        {{ __('Masuk') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('register')" :active="request()->routeIs('register')" wire:navigate>
+                        {{ __('Daftar') }}
+                    </x-nav-link> --}}
+                </div>
+            @endif
+
+            <!-- Settings Dropdown -->
+            @auth
+                <div class="hidden min-[850px]:ms-6 min-[850px]:flex min-[850px]:items-center">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button
+                                class="inline-flex items-center rounded-md border border-transparent bg-[rgb(var(--fg-rgb))] px-3 py-2 text-sm font-medium leading-4 text-[rgb(var(--bg-rgb))] transition duration-150 ease-in-out hover:text-[rgba(var(--bg-rgb),0.85)] focus:outline-none">
+                                <div x-data="{ name: '{{ auth()->user()->name }}' }" x-text="name"
+                                    x-on:profile-updated.window="name = $event.detail.name">
+                                    {{ auth()->user()->name }}
+                                </div>
+                                <div class="ms-1">
+                                    <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile')" wire:navigate>
+                                {{ __('Profil') }}
+                            </x-dropdown-link>
+
+                            <!-- Authentication -->
+                            <button wire:click="logout" class="w-full text-start">
+                                <x-dropdown-link>
+                                    {{ __('Keluar') }}
+                                </x-dropdown-link>
+                            </button>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+            @endauth
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center min-[850px]:hidden">
@@ -123,7 +144,7 @@ $logout = function (Logout $logout) {
                 {{ __('Proyek') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('contact')" :active="request()->routeIs('contact')" wire:navigate>
-                {{ __('Kontak') }}
+                {{ __('Hubungi Kami') }}
             </x-responsive-nav-link>
             @auth
                 <x-responsive-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate>
@@ -158,13 +179,13 @@ $logout = function (Logout $logout) {
 
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('profile')" wire:navigate>
-                        {{ __('Profile') }}
+                        {{ __('Profil') }}
                     </x-responsive-nav-link>
 
                     <!-- Authentication -->
                     <button wire:click="logout" class="w-full text-start">
                         <x-responsive-nav-link>
-                            {{ __('Log Out') }}
+                            {{ __('Keluar') }}
                         </x-responsive-nav-link>
                     </button>
                 </div>

@@ -1,6 +1,6 @@
 <x-app-layout>
-    <section class="std-section">
-        <section class="absolute left-0 top-0 z-[-1] opacity-70">
+    <section class="std-section space-y-16">
+        <div class="absolute left-0 top-0 z-[-1] opacity-70">
             <div
                 class="pulse flex aspect-square h-[500px] w-[500px] items-center justify-center rounded-full border border-[rgb(var(--acc-rgb))]">
                 <div
@@ -10,12 +10,12 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="relative flex h-[400px] w-full items-center justify-center">
+        <div class="relative flex h-[350px] w-full items-center justify-center space-x-14">
             <!-- Hero -->
-            <img src="{{ asset('assets/hero.png') }}" alt="Paint Bucket"
-                class="float z-[1] w-[250px] min-[1000px]:w-[300px] min-[1300px]:w-[400px]">
+            <img src="{{ asset('assets/products/exterior-interior.png') }}" alt="Paint Bucket"
+                class="float z-[1] w-[200px] min-[1000px]:w-[250px] min-[1300px]:w-[300px]">
 
             <!-- Welcome -->
             <div class="relative flex flex-col space-y-8">
@@ -38,6 +38,54 @@
                     </svg>
                 </a>
             </div>
-        </section>
+        </div>
+        <hr class="border border-[rgba(var(--fg-rgb),0.2)]">
+
+        <!-- Products -->
+        <div>
+            <div class="flex flex-col items-center space-y-6 text-center text-3xl font-light tracking-tighter">
+                <div class="max-w-[600px]">
+                    {{ __('Cat tembok berkualitas tinggi dengan pilihan warna-warna yang indah') }}
+                </div>
+                <div class="flex items-center space-x-12">
+                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--green-rgb))]"></div>
+                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--blue-rgb))]"></div>
+                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--black-rgb))]"></div>
+                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--red-rgb))]"></div>
+                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--gray-rgb))]"></div>
+                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--orange-rgb))]"></div>
+                </div>
+            </div>
+            <div class="">
+
+            </div>
+        </div>
+        <hr class="border border-[rgba(var(--fg-rgb),0.2)]">
+
+        <!-- Projects -->
+        <div>
+            <div class="flex flex-col items-center space-y-6 text-center text-3xl font-light tracking-tighter">
+                <div class="max-w-[600px]">
+                    {{ __('Paintylux telah digunakan dalam banyak proyek') }}
+                </div>
+                <div class="flex items-center space-x-12">
+                    <div
+                        class="flex h-[250px] w-[250px] items-center justify-center rounded-xl border border-[rgb(var(--black-rgb))] text-sm">
+                        Image here
+                    </div>
+                    <div
+                        class="flex h-[250px] w-[250px] items-center justify-center rounded-xl border border-[rgb(var(--black-rgb))] text-sm">
+                        Image here
+                    </div>
+                    <div
+                        class="flex h-[250px] w-[250px] items-center justify-center rounded-xl border border-[rgb(var(--black-rgb))] text-sm">
+                        Image here
+                    </div>
+                </div>
+            </div>
+            <div class="">
+
+            </div>
+        </div>
     </section>
 </x-app-layout>

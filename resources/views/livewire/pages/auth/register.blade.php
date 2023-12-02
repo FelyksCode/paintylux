@@ -53,7 +53,7 @@ $register = function () {
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input wire:model="form.email" id="email" class="mt-1 block w-full" type="text" name="email"
-                autocomplete="username" wire:model.live.debounce.0ms="form.email" />
+                autocomplete="username" wire:model.live.debounce.50ms="form.email" />
             @error('form.email')
                 <x-input-error :messages="$message" class="mt-2" />
             @enderror

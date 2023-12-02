@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,20 +18,26 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'index')
     ->name('index');
 
-Route::view('/produk', 'products.index')
+Route::view('produk', 'products.index')
     ->name('products');
 
-Route::view('/proyek', 'projects.index')
+Route::view('proyek', 'projects.index')
     ->name('projects');
 
-Route::view('/kontak', 'contact')
+Route::view('kontak', 'contact')
     ->name('contact');
 
-Route::view('/checkout', 'checkout')
+Route::view('checkout', 'checkout')
+    ->middleware('auth')
     ->name('checkout');
 
-Route::view('profile', 'profile')
+Route::view('profile', 'profile.index')
     ->middleware(['auth', 'verified'])
     ->name('profile');
 
+Route::view('profile/edit', 'profile.edit')
+    ->middleware(['auth', 'verified'])
+    ->name('edit-profile');
+
 require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';

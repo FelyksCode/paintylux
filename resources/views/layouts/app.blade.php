@@ -10,16 +10,22 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
-<body class="antialiased">
+<body class="relative antialiased">
     <livewire:layout.navigation />
-    
+
     <!-- Page Content -->
-    <main class="mt-[var(--navbar-height)] py-4">
+    <main class="mt-[var(--navbar-height)] py-4" x-cloak x-data="{ show: false, showPage() { setTimeout(() => this.show = true, 100) } }" x-transition.1500ms x-show="show"
+        x-init="showPage">
         {{ $slot }}
     </main>
+
+    <!-- Footer -->
+    <x-footer />
+
+    <!-- WhatsApp float -->
+    <x-whats-app-float />
 </body>
 
 </html>

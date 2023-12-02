@@ -19,7 +19,11 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('product_id')
+            $table->foreignId('product_category_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('color_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

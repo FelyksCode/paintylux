@@ -10,8 +10,8 @@ use Illuminate\Validation\Rule;
 use function Livewire\Volt\state;
 
 state([
-    'name' => fn () => auth()->user()->name,
-    'email' => fn () => auth()->user()->email
+    'name' => fn() => auth()->user()->name,
+    'email' => fn() => auth()->user()->email,
 ]);
 
 $updateProfileInformation = function () {
@@ -54,38 +54,42 @@ $sendVerification = function () {
 <section>
     <header>
         <h2 class="text-lg font-medium">
-            {{ __('Profile') }}
+            {{ __('Profil') }}
         </h2>
 
         <p class="mt-1 text-sm text-[rgb(var(--gray-rgb))]">
-            {{ __("Perbarui nama dan email dari akun Anda.") }}
+            {{ __('Perbarui nama dan email dari akun Anda.') }}
         </p>
     </header>
 
     <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
+            <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required
+                autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="username" />
+            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full"
+                required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-            @if (auth()->user() instanceof MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
+            @if (auth()->user() instanceof MustVerifyEmail &&
+                    !auth()->user()->hasVerifiedEmail())
                 <div>
-                    <p class="text-sm mt-2 text-[rgb(var(--gray-rgb))]">
+                    <p class="mt-2 text-sm text-[rgb(var(--gray-rgb))]">
                         {{ __('Your email address is unverified.') }}
 
-                        <button wire:click.prevent="sendVerification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button wire:click.prevent="sendVerification"
+                            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600">
+                        <p class="mt-2 text-sm font-medium text-green-600">
                             {{ __('A new verification link has been sent to your email address.') }}
                         </p>
                     @endif
@@ -94,7 +98,7 @@ $sendVerification = function () {
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button class="w-fit">{{ __('Ganti') }}</x-primary-button>
+            <x-secondary-button type="submit">{{ __('Ganti') }}</x-secondary-button>
             <x-action-message class="me-3" on="profile-updated">
                 {{ __('Profil berhasil diperbarui.') }}
             </x-action-message>

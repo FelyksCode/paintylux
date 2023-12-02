@@ -24,6 +24,10 @@
 }
 
 @layer base {
+    [x-cloak] {
+        display: none !important;
+    }
+
     *::-webkit-scrollbar {
         @apply w-[0px];
     }
@@ -50,7 +54,7 @@
     }
 
     form {
-        @apply w-full sm:max-w-md;
+        @apply w-full px-4 sm:px-0 sm:max-w-md;
     }
 
     /* nav {
