@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminCheck
+class NonAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,6 +16,6 @@ class AdminCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return (Auth::check() && auth()->user()->is_admin) ? $next($request) : abort('404');
+        return (Auth::check() && !Auth::user()->is_admin) ? $next($request) : abort('404');
     }
 }

@@ -91,17 +91,20 @@ $sendVerification = function () {
                     !auth()->user()->hasVerifiedEmail())
                 <div>
                     <p class="mt-2 text-sm text-[rgb(var(--gray-rgb))]">
-                        {{ __('Your email address is unverified.') }}
+                        {{ __('Email Anda belum terverifikasi.') }}
+                        {{-- {{ __('Your email address is unverified.') }} --}}
 
                         <button wire:click.prevent="sendVerification"
-                            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            {{ __('Click here to re-send the verification email.') }}
+                            class="smooth rounded-md text-sm text-[rgb(var(--gray-rgb))] underline hover:text-[rgb(var(--bg-rgb))]">
+                            {{ __('Klik di sini untuk mengirim ulang email verifikasi.') }}
+                            {{-- {{ __('Click here to re-send the verification email.') }} --}}
                         </button>
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
                         <p class="mt-2 text-sm font-medium text-green-600">
-                            {{ __('A new verification link has been sent to your email address.') }}
+                            {{ __('Link verifikasi baru telah dikirimkan ke email Anda.') }}
+                            {{-- {{ __('A new verification link has been sent to your email address.') }} --}}
                         </p>
                     @endif
                 </div>

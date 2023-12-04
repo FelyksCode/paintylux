@@ -17,6 +17,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Order::class);
     }
 
+    public function ongoingOrders()
+    {
+        return $this->orders()->where('finished', false);
+    }
+
+    public function finishedOrders()
+    {
+        return $this->orders()->where('finished', true);
+    }
+
     public static function nonAdmins()
     {
         return self::where('is_admin', false)->get();

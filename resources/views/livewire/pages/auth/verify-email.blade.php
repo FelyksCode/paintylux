@@ -5,9 +5,16 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-use function Livewire\Volt\layout;
+use function Livewire\Volt\{mount, layout};
 
 layout('layouts.app');
+
+mount(function () {
+    if (Auth::user()->email_verified_at) {
+        $this->redirect(route('index'), navigate: true);
+        return;
+    }
+});
 
 $sendVerification = function () {
     if (Auth::user()->hasVerifiedEmail()) {

@@ -9,6 +9,9 @@ function error_message($attribute, $error = "required")
         case "max":
             $message = ucfirst($attribute) . " yang diisi terlalu panjang.";
             break;
+        case "integer":
+            $message = ucfirst($attribute) . " harus angka bulat.";
+            break;
         case "unique":
             $message = ucfirst($attribute) . " sudah terpakai.";
             break;

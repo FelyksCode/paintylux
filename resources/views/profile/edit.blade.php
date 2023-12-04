@@ -1,8 +1,8 @@
 <x-app-layout>
     <section class="std-section space-y-6">
         <div class="flex items-center space-x-4">
-            <x-icons.back-button :link="route('profile')" class="h-10 w-10" />
-            <h2 class="leading-tighter text-5xl font-light tracking-tighter text-gray-800">
+            <x-icons.back-button :link="route('profile')" class="h-11 w-11" />
+            <h2 class="text-5xl font-light tracking-tighter text-gray-800">
                 {{ __('Edit Profil') }}
             </h2>
         </div>

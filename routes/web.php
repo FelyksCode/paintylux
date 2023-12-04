@@ -28,16 +28,15 @@ Volt::route('hubungi-kami', 'contact')
     ->name('contact');
 
 Volt::route('checkout', 'checkout')
-    ->middleware('auth')
+    ->middleware(['auth', 'non-admin'])
     ->name('checkout');
 
-Route::view('profile', 'profile.index')
-    ->middleware(['auth', 'verified'])
-    ->name('profile');
-
-Route::view('profile/edit', 'profile.edit')
-    ->middleware(['auth', 'verified'])
-    ->name('edit-profile');
+Route::group(['middleware' => 'auth', 'prefix' => 'profile'], function () {
+    Route::view('/', 'profile.index')
+        ->name('profile');
+    Route::view('edit', 'profile.edit')
+        ->name('edit-profile');
+});
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

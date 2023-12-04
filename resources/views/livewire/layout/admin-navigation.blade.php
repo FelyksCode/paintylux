@@ -13,8 +13,9 @@ $logout = function (Logout $logout) {
 <nav id="navbar" x-data="{ open: false, overThreshold: (window.pageYOffset > 10) }" @scroll.window="overThreshold = window.pageYOffset > 10"
     @resize.window="open = window.innerWidth >= 1000 ? false : open"
     class="h-[var(--navbar-height) smooth fixed left-0 top-0 z-[2] w-screen"
-    :class="(open || overThreshold) &&
-    'bg-[rgba(var(--bg-rgb),0.6)] backdrop-blur-lg border-b border-b-[rgba(var(--fg-rgb),0.6)]'">
+    :class="(open || overThreshold) ?
+    'bg-[rgba(var(--bg-rgb),0.6)] backdrop-blur-lg border-b border-b-[rgba(var(--fg-rgb),0.6)]' :
+    'border-b-[rgba(var(--fg-rgb),0)]'">
     <!-- Primary Navigation Menu -->
     <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 w-full justify-between">

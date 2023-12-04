@@ -9,8 +9,18 @@ class Order extends Model
 {
     use HasFactory;
 
-    public function order_details()
+    public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class);
+    }
+
+    static function ongoing()
+    {
+        return self::where('finished', false)->get();
+    }
+
+    static function finished()
+    {
+        return self::where('finished', true)->get();
     }
 }

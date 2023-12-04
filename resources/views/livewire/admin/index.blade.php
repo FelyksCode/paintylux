@@ -35,7 +35,7 @@ layout('layouts.admin');
                         {{ __('Order') }}
                     </div>
                     <div>
-                        {{ __('Ada 0 order berlangsung dan 0 order yang sudah selesai.') }}
+                        {{ __('Ada ' . count(Order::ongoing()) . ' order berlangsung dan ' . count(Order::finished()) . ' order yang sudah selesai.') }}
                     </div>
                 </div>
                 <a href="{{ route('admin-orders') }}"
@@ -70,7 +70,7 @@ layout('layouts.admin');
                         {{ __('Produk') }}
                     </div>
                     <div>
-                        {{ __('Ada 0 order berlangsung dan 0 order yang sudah selesai.') }}
+                        {{ __('Ada ' . count(Color::all()) . ' warna yang sudah terdaftar.') }}
                     </div>
                 </div>
                 <a href="{{ route('admin-products') }}"
@@ -86,7 +86,7 @@ layout('layouts.admin');
                         {{ __('Proyek') }}
                     </div>
                     <div>
-                        {{ __('Ada 0 pesan baru dan 0 pesan secara total.') }}
+                        {{ __('Ada ' . count(Project::all()) . ' proyek terdaftar.') }}
                     </div>
                 </div>
                 <a href="{{ route('admin-projects') }}"

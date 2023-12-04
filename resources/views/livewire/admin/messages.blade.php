@@ -6,16 +6,6 @@ use function Livewire\Volt\layout;
 
 layout('layouts.admin');
 
-$delete = function ($id) {
-    Message::find($id)->delete();
-};
-
-$toggleRead = function ($id) {
-    $message = Message::find($id);
-    $message->read = !$message->read;
-    $message->save();
-};
-
 ?>
 
 <section class="std-section space-y-10 py-5">

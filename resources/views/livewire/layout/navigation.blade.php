@@ -40,11 +40,11 @@ $logout = function (Logout $logout) {
                         class="float-in-down opacity-0 [animation-delay:0.6s]">
                         {{ __('Hubungi Kami') }}
                     </x-nav-link>
-                    @auth
+                    @if (Auth::check() && !Auth::user()->is_admin)
                         <x-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate
                             class="float-in-down opacity-0 [animation-delay:0.8s]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="h-5 w-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
@@ -52,12 +52,12 @@ $logout = function (Logout $logout) {
                                 class="@if (request()->routeIs('checkout')) bg-[rgb(var(--acc-rgb))] @else bg-[rgb(var(--gray-rgb))] group-hover:bg-[rgb(var(--fg-rgb))] @endif smooth absolute bottom-[15px] left-[18px] flex h-[15px] w-[15px] items-center justify-center rounded-full text-[8px] tracking-tighter text-[rgb(var(--bg-rgb))]">
                                 0</div>
                         </x-nav-link>
-                    @endauth
+                    @endif
                 </div>
             </div>
 
             <!-- Auth links -->
-            @if (!Auth::check())
+            @guest
                 <div class="hidden items-center space-x-4 min-[850px]:flex">
                     <a href="{{ route('login') }}" class="float-in-down opacity-0 [animation-delay:0.8s]">
                         <x-secondary-button
@@ -72,7 +72,7 @@ $logout = function (Logout $logout) {
                         </x-danger-button>
                     </a>
                 </div>
-            @endif
+            @endguest
 
             <!-- Settings Dropdown -->
             @auth
@@ -144,7 +144,7 @@ $logout = function (Logout $logout) {
                 class="float-in-down opacity-0 [animation-delay:0.2s]">
                 {{ __('Hubungi Kami') }}
             </x-responsive-nav-link>
-            @auth
+            @if (Auth::check() && !Auth::user()->is_admin)
                 <x-responsive-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate
                     class="float-in-down opacity-0 [animation-delay:0.3s]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -156,8 +156,8 @@ $logout = function (Logout $logout) {
                         class="@if (request()->routeIs('checkout')) bg-[rgb(var(--acc-rgb))] @else bg-[rgb(var(--gray-rgb))] group-hover:bg-[rgb(var(--fg-rgb))] @endif smooth absolute bottom-[15px] left-[18px] flex h-[15px] w-[15px] items-center justify-center rounded-full text-[8px] tracking-tighter text-[rgb(var(--bg-rgb))]">
                         0</div>
                 </x-responsive-nav-link>
-            @endauth
-            @if (!Auth::check())
+            @endif
+            @guest
                 <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')" wire:navigate
                     class="float-in-down opacity-0 [animation-delay:0.3s]">
                     {{ __('Masuk') }}
@@ -166,7 +166,7 @@ $logout = function (Logout $logout) {
                     class="float-in-down opacity-0 [animation-delay:0.4s]">
                     {{ __('Daftar') }}
                 </x-responsive-nav-link>
-            @endif
+            @endguest
         </div>
 
         @auth
