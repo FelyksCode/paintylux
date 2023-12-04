@@ -84,7 +84,8 @@ $toggleVerify = function ($id) {
                             {{ __('Batal') }}
                         </x-primary-button>
 
-                        <x-danger-button class="ms-3" wire:click="delete({{ $user->id }})">
+                        <x-danger-button class="ms-3" wire:click="delete({{ $user->id }})"
+                            x-on:click="$dispatch('close')">
                             {{ __('Hapus Pengguna') }}
                         </x-danger-button>
                     </div>

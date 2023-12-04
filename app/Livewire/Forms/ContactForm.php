@@ -35,8 +35,8 @@ class ContactForm extends Form
 
     public function boot()
     {
-        $this->sender = Auth::check() ? Auth::user()->name : '';
-        $this->contact = Auth::check() ? Auth::user()->email : '';
+        $this->sender = Auth::check() ? Auth::user()->name : $this->sender;
+        $this->contact = Auth::check() ? Auth::user()->email : $this->contact;
     }
 
     public function rules()

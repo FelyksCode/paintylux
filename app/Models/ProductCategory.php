@@ -8,9 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class ProductCategory extends Model
 {
     use HasFactory;
+
+    public function type()
+    {
+        return $this->belongsTo(ProductType::class, 'product_type_id');
+    }
+
+    public static function allOrdered()
+    {
+        return self::orderBy('product_type_id')->get();
+    }
+
     protected $fillable = [
         "price",
         "weight",
         "container",
+        "product_type_id",
     ];
 }

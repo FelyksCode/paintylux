@@ -123,7 +123,7 @@ $logout = function (Logout $logout) {
                 class="float-in-down opacity-0 [animation-delay:0.2s]">
                 {{ __('Produk') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin-projects')" :active="request()->routeIs('admin-projects')" wire:navigate
+            <x-responsive-nav-link :href="route('admin-projects')" :active="request()->routeIs('admin-projects.*')" wire:navigate
                 class="float-in-down opacity-0 [animation-delay:0.3s]">
                 {{ __('Proyek') }}
             </x-responsive-nav-link>

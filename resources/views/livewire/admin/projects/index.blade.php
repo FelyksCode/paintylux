@@ -143,7 +143,7 @@ $delete = function ($id) {
                         <div class="flex items-center space-x-3">
                             <x-icons.delete-button class="text-[rgb(var(--red-rgb))]"
                                 x-on:click.prevent="$dispatch('open-modal', 'confirm-project-{{ $project->id }}-deletion')" />
-                            <a href="{{ route('admin-projects-edit', ['id' => $project->id]) }}" wire:navigate>
+                            <a href="{{ route('admin-projects.edit', ['id' => $project->id]) }}" wire:navigate>
                                 <x-icons.edit-button />
                             </a>
                         </div>
@@ -164,7 +164,8 @@ $delete = function ($id) {
                                 {{ __('Batal') }}
                             </x-primary-button>
 
-                            <x-danger-button class="ms-3" wire:click="delete({{ $project->id }})">
+                            <x-danger-button class="ms-3" wire:click="delete({{ $project->id }})"
+                                x-on:click="$dispatch('close')">
                                 {{ __('Hapus Proyek') }}
                             </x-danger-button>
                         </div>

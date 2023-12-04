@@ -32,3 +32,10 @@ function get_date($timestamp)
 {
     return date('j F Y', strtotime($timestamp));
 }
+
+function format_price($price)
+{
+    $formatted_price = number_format($price, 2, ',', '.');
+
+    return 'IDR ' . $formatted_price;
+}

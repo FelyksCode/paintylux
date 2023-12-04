@@ -6,6 +6,16 @@ use function Livewire\Volt\layout;
 
 layout('layouts.admin');
 
+$delete = function ($id) {
+    Message::find($id)->delete();
+};
+
+$toggleRead = function ($id) {
+    $message = Message::find($id);
+    $message->read = !$message->read;
+    $message->save();
+};
+
 ?>
 
 <section class="std-section space-y-10 py-5">
@@ -111,7 +121,8 @@ layout('layouts.admin');
                             {{ __('Batal') }}
                         </x-primary-button>
 
-                        <x-danger-button class="ms-3" wire:click="delete({{ $message->id }})">
+                        <x-danger-button class="ms-3" wire:click="delete({{ $message->id }})"
+                            x-on:click="$dispatch('close')">
                             {{ __('Hapus Pesan') }}
                         </x-danger-button>
                     </div>
