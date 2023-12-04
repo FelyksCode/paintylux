@@ -17,6 +17,12 @@ state([
 rules([
     'current_password' => ['required', 'string', 'current_password'],
     'password' => ['required', 'string', Password::defaults(), 'confirmed'],
+])->messages([
+    'current_password.required' => 'Mohon mengisi password Anda yang sekarang.',
+    'current_password.current_password' => 'Password yang Anda isi salah.',
+    'password' => 'Password Anda harus minimal 8 karakter.',
+    'password.required' => 'Mohon mengisi password Anda yang baru.',
+    'password.confirmed' => 'Password baru yang diisi belum sama.',
 ]);
 
 $updatePassword = function () {
@@ -73,7 +79,7 @@ $updatePassword = function () {
         </div>
 
         <div class="flex items-center gap-4">
-            <x-secondary-button>{{ __('Ganti') }}</x-secondary-button>
+            <x-secondary-button type="submit">{{ __('Ganti') }}</x-secondary-button>
 
             <x-action-message class="me-3" on="password-updated">
                 {{ __('Password berhasil diganti.') }}

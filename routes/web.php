@@ -24,10 +24,10 @@ Route::view('produk', 'products.index')
 Route::view('proyek', 'projects.index')
     ->name('projects');
 
-Volt::route('kontak', 'contact')
+Volt::route('hubungi-kami', 'contact')
     ->name('contact');
 
-Route::view('checkout', 'checkout')
+Volt::route('checkout', 'checkout')
     ->middleware('auth')
     ->name('checkout');
 

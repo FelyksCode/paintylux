@@ -33,7 +33,7 @@ $send = function () {
         <!-- WhatsApp -->
         <a href="{{ config('const.CONTACT.WHATSAPP_LINK') }}" target="__blank"
             class="smooth group flex w-full items-center justify-center space-x-2 rounded-md bg-[rgb(var(--green-rgb))] px-6 py-2 text-[rgb(var(--white-rgb))] selection:bg-[rgb(var(--white-rgb))] selection:text-[rgb(var(--green-rgb))] hover:opacity-90">
-            <x-whats-app-logo class="smooth h-6 w-6 group-hover:-rotate-[20deg]" />
+            <x-icons.whats-app-logo class="smooth h-6 w-6 group-hover:-rotate-[20deg]" />
             <div class="text-upperwide text-sm">Chat dengan WhatsApp</div>
         </a>
         <hr class="border-[rgb(var(--fg-rgb))]">
@@ -91,18 +91,13 @@ $send = function () {
     </section>
 
     <!-- Contact information -->
-    <section class="flex w-full flex-col space-y-4 px-4 sm:px-0 min-[950px]:w-1/2">
+    <section class="flex w-full flex-col space-y-6 px-4 sm:px-0 min-[950px]:w-1/2">
         <!-- Map -->
-        <div class="overflow-hidden rounded-lg shadow-lg shadow-[rgba(var(--black-rgb),0.1)]"">
+        <div class="overflow-hidden rounded-lg shadow-lg shadow-[rgba(var(--black-rgb),0.1)]">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1731981813227!2d106.64529897483607!3d-6.240890561111525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f929b9e6b41d%3A0xad0294b52275fb49!2sChevoil%20Tower!5e0!3m2!1sen!2sid!4v1701534231728!5m2!1sen!2sid"
                 style="border:0;" allowfullscreen="" loading="lazy" class="h-[270px] w-full"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-
-        <!-- Title -->
-        <div class="text-3xl font-bold tracking-tighter">
-            Paintylux
         </div>
 
         <!-- Address -->
@@ -117,7 +112,7 @@ $send = function () {
         <div class="text-inactive tracking-wide">
             @foreach (config('const.CONTACT.PHONE') as $number)
                 <div class="flex items-center space-x-2">
-                    <x-whats-app-logo class="-ml-1 h-6 w-6 fill-[rgba(var(--fg-rgb),0.7)]" />
+                    <x-icons.whats-app-logo class="-ml-1 h-6 w-6 fill-[rgba(var(--fg-rgb),0.7)]" />
                     <div>
                         {{ $number }}
                     </div>
@@ -138,7 +133,7 @@ $send = function () {
         </div>
 
         <!-- Directions button -->
-        <a href="https://maps.app.goo.gl/h3hiz9ragrb5xsS39">
+        <a href="https://maps.app.goo.gl/h3hiz9ragrb5xsS39" target="__blank">
             <x-secondary-button
                 class="flex w-full justify-center !border-[rgb(var(--fg-rgb))] !bg-transparent hover:opacity-80">
                 Dapat arahan

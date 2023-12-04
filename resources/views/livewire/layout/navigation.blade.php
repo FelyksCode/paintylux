@@ -59,13 +59,13 @@ $logout = function (Logout $logout) {
             <!-- Auth links -->
             @if (!Auth::check())
                 <div class="hidden items-center space-x-4 min-[850px]:flex">
-                    <a href="{{ route('login') }}" class="float-in-down opacity-0 [animation-delay:1s]">
+                    <a href="{{ route('login') }}" class="float-in-down opacity-0 [animation-delay:0.8s]">
                         <x-secondary-button
                             class="{{ request()->routeIs('login') ? 'ring-2 ring-offset-2 ring-[rgb(var(--fg-rgb))]' : '' }} smooth h-fit !border-[rgb(var(--fg-rgb))] !bg-transparent text-[rgb(var(--fg-rgb))] shadow-none hover:opacity-75 focus:outline-[rgb(var(--fg-rgb))] focus:!ring-[rgb(var(--fg-rgb))]">
                             {{ __('Masuk') }}
                         </x-secondary-button>
                     </a>
-                    <a href="{{ route('register') }}" class="float-in-down opacity-0 [animation-delay:1.2s]">
+                    <a href="{{ route('register') }}" class="float-in-down opacity-0 [animation-delay:1s]">
                         <x-danger-button
                             class="{{ request()->routeIs('register') ? 'ring-2 ring-offset-2 ring-[rgb(var(--acc-rgb))]' : '' }} h-fit shadow-none">
                             {{ __('Daftar') }}
@@ -77,7 +77,7 @@ $logout = function (Logout $logout) {
             <!-- Settings Dropdown -->
             @auth
                 <div
-                    class="float-in-down hidden opacity-0 [animation-delay:1.4s] min-[850px]:ms-6 min-[850px]:flex min-[850px]:items-center">
+                    class="float-in-down hidden opacity-0 [animation-delay:1s] min-[850px]:ms-6 min-[850px]:flex min-[850px]:items-center">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
@@ -125,13 +125,6 @@ $logout = function (Logout $logout) {
                             stroke-width="5" stroke-linecap="round" stroke-dasharray="80" stroke-dashoffset="0">
                         </line>
                     </svg>
-                    {{-- <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg> --}}
                 </button>
             </div>
         </div>
@@ -140,17 +133,20 @@ $logout = function (Logout $logout) {
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden min-[850px]:hidden">
         <div class="space-y-1 pb-3 pt-2">
-            <x-responsive-nav-link :href="route('products')" :active="request()->routeIs('products')" wire:navigate>
+            <x-responsive-nav-link :href="route('products')" :active="request()->routeIs('products')" wire:navigate class="float-in-down opacity-0">
                 {{ __('Produk') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('projects')" :active="request()->routeIs('projects')" wire:navigate>
+            <x-responsive-nav-link :href="route('projects')" :active="request()->routeIs('projects')" wire:navigate
+                class="float-in-down opacity-0 [animation-delay:0.1s]">
                 {{ __('Proyek') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('contact')" :active="request()->routeIs('contact')" wire:navigate>
+            <x-responsive-nav-link :href="route('contact')" :active="request()->routeIs('contact')" wire:navigate
+                class="float-in-down opacity-0 [animation-delay:0.2s]">
                 {{ __('Hubungi Kami') }}
             </x-responsive-nav-link>
             @auth
-                <x-responsive-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate>
+                <x-responsive-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate
+                    class="float-in-down opacity-0 [animation-delay:0.3s]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="h-5 w-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -162,10 +158,12 @@ $logout = function (Logout $logout) {
                 </x-responsive-nav-link>
             @endauth
             @if (!Auth::check())
-                <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')" wire:navigate>
+                <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')" wire:navigate
+                    class="float-in-down opacity-0 [animation-delay:0.3s]">
                     {{ __('Masuk') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')" wire:navigate>
+                <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')" wire:navigate
+                    class="float-in-down opacity-0 [animation-delay:0.4s]">
                     {{ __('Daftar') }}
                 </x-responsive-nav-link>
             @endif
@@ -174,19 +172,20 @@ $logout = function (Logout $logout) {
         @auth
             <!-- Responsive Settings Options -->
             <div class="navlink smooth border-t border-gray-200 pb-1 pt-4">
-                <div class="px-4">
+                <div class="float-in-down px-4 opacity-0 [animation-delay:0.4s]">
                     <div class="text-base font-medium" x-data="{ name: '{{ auth()->user()->name }}' }" x-text="name"
                         x-on:profile-updated.window="name = $event.detail.name"></div>
                     <div class="text-sm font-medium opacity-60">{{ auth()->user()->email }}</div>
                 </div>
 
                 <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('profile')" wire:navigate>
+                    <x-responsive-nav-link :href="route('profile')" wire:navigate
+                        class="float-in-down opacity-0 [animation-delay:0.5s]">
                         {{ __('Profil') }}
                     </x-responsive-nav-link>
 
                     <!-- Authentication -->
-                    <button wire:click="logout" class="w-full text-start">
+                    <button wire:click="logout" class="float-in-down w-full text-start opacity-0 [animation-delay:0.6s]">
                         <x-responsive-nav-link>
                             {{ __('Keluar') }}
                         </x-responsive-nav-link>

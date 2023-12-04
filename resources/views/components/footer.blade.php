@@ -3,7 +3,7 @@
     x-cloak x-data="{ show: false, showPage() { setTimeout(() => this.show = true, 100) } }" x-transition.opacity.1500ms x-show="show" x-init="showPage">
     <div class="std-section space-y-6">
         <!-- Title -->
-        <a href="{{ route('contact') }}" class="group flex w-fit items-center space-x-4">
+        <a href="{{ route('contact') }}" wire:navigate class="group flex w-fit items-center space-x-4">
             <div class="smooth text-4xl font-semibold group-hover:tracking-wider">{{ __('Hubungi kami') }}</div>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
                 stroke="currentColor" class="smooth h-8 w-8 group-hover:-rotate-90">
@@ -37,7 +37,7 @@
                     <div class="tracking-wide">
                         @foreach (config('const.CONTACT.PHONE') as $number)
                             <div class="-mb-1 flex items-center">
-                                <x-whats-app-logo class="-ml-1 h-7 w-7" />
+                                <x-icons.whats-app-logo class="-ml-1 h-7 w-7" />
                                 <div>{{ $number }}</div>
                             </div>
                         @endforeach
@@ -57,16 +57,19 @@
 
             <!-- Links -->
             <div class="flex flex-col space-y-2 min-[500px]:items-end min-[950px]:w-[40%]">
-                <a href="{{ route('index') }}" class="text-upperwide smooth font-bold hover:opacity-80">
+                <a href="{{ route('index') }}" wire:navigate class="text-upperwide smooth font-bold hover:opacity-80">
                     {{ __('Beranda') }}
                 </a>
-                <a href="{{ route('products') }}" class="text-upperwide smooth font-bold hover:opacity-80">
+                <a href="{{ route('products') }}" wire:navigate
+                    class="text-upperwide smooth font-bold hover:opacity-80">
                     {{ __('Produk') }}
                 </a>
-                <a href="{{ route('projects') }}" class="text-upperwide smooth font-bold hover:opacity-80">
+                <a href="{{ route('projects') }}" wire:navigate
+                    class="text-upperwide smooth font-bold hover:opacity-80">
                     {{ __('Proyek') }}
                 </a>
-                <a href="{{ route('contact') }}" class="text-upperwide smooth font-bold hover:opacity-80">
+                <a href="{{ route('contact') }}" wire:navigate
+                    class="text-upperwide smooth font-bold hover:opacity-80">
                     {{ __('Hubungi kami') }}
                 </a>
             </div>

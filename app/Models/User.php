@@ -12,6 +12,21 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public static function nonAdmins()
+    {
+        return self::where('is_admin', false)->get();
+    }
+
+    public static function admins()
+    {
+        return self::where('is_admin', true)->get();
+    }
+
     /**
      * The attributes that are mass assignable.
      *

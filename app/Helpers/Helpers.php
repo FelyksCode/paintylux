@@ -23,3 +23,9 @@ function error_message($attribute, $error = "required")
     }
     return trans($message);
 }
+
+
+function get_date($timestamp)
+{
+    return date('j F Y', strtotime($timestamp));
+}

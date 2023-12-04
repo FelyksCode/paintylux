@@ -1,17 +1,17 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Admin;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class WhatsAppLogo extends Component
+class SummaryBox extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public bool $light = false)
     {
         //
     }
@@ -21,6 +21,6 @@ class WhatsAppLogo extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.whats-app-logo');
+        return view('components.admin.summary-box');
     }
 }

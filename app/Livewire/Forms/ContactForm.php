@@ -2,7 +2,8 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
+
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -31,6 +32,12 @@ class ContactForm extends Form
         'content.required' => 'Mohon mengisi pesan Anda.',
         'content.max' => 'Pesan yang diisi terlalu panjang.',
     ];
+
+    public function boot()
+    {
+        $this->sender = Auth::check() ? Auth::user()->name : '';
+        $this->contact = Auth::check() ? Auth::user()->email : '';
+    }
 
     public function rules()
     {

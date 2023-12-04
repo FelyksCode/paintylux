@@ -6,12 +6,12 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Textarea extends Component
+class BackButton extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public string $link)
     {
         //
     }
@@ -21,6 +21,6 @@ class Textarea extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.textarea');
+        return view('components.icons.back-button');
     }
 }
