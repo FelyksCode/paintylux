@@ -38,11 +38,11 @@ $logout = function (Logout $logout) {
                         class="float-in-down opacity-0 [animation-delay:0.4s]">
                         {{ __('Pesan') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.products')" :active="request()->routeIs('admin.products')" wire:navigate
+                    <x-nav-link :href="route('admin.products')" :active="request()->routeIs('admin.products*')" wire:navigate
                         class="float-in-down opacity-0 [animation-delay:0.6s]">
                         {{ __('Produk') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.projects')" :active="request()->routeIs('admin.projects')" wire:navigate
+                    <x-nav-link :href="route('admin.projects')" :active="request()->routeIs('admin.projects*')" wire:navigate
                         class="float-in-down opacity-0 [animation-delay:0.8s]">
                         {{ __('Proyek') }}
                     </x-nav-link>
@@ -119,11 +119,11 @@ $logout = function (Logout $logout) {
                 class="float-in-down opacity-0 [animation-delay:0.1s]">
                 {{ __('Pesan') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.products')" :active="request()->routeIs('admin.products.*')" wire:navigate
+            <x-responsive-nav-link :href="route('admin.products')" :active="request()->routeIs('admin.products*')" wire:navigate
                 class="float-in-down opacity-0 [animation-delay:0.2s]">
                 {{ __('Produk') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.projects')" :active="request()->routeIs('admin.projects.*')" wire:navigate
+            <x-responsive-nav-link :href="route('admin.projects')" :active="request()->routeIs('admin.projects*')" wire:navigate
                 class="float-in-down opacity-0 [animation-delay:0.3s]">
                 {{ __('Proyek') }}
             </x-responsive-nav-link>
