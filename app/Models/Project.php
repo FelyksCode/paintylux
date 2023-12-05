@@ -18,6 +18,11 @@ class Project extends Model
         };
     }
 
+    public static function allOrdered()
+    {
+        return self::orderByDesc('year')->orderBy('name')->get();
+    }
+
     protected $fillable = [
         'name',
         'year',

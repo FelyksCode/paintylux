@@ -15,14 +15,19 @@ class Message extends Model
         $this->save();
     }
 
+    public static function allOrdered()
+    {
+        return self::orderByDesc('created_at')->get();
+    }
+
     public static function read()
     {
-        return self::where('read', true)->get();
+        return self::orderByDesc('created_at')->where('read', true)->get();
     }
 
     public static function notRead()
     {
-        return self::where('read', false)->get();
+        return self::orderByDesc('created_at')->where('read', false)->get();
     }
 
     protected $fillable = [

@@ -18,6 +18,12 @@ class ProductType extends Model
             unlink($path);
         };
     }
+
+    public static function allOrdered()
+    {
+        return self::orderByDesc('created_at')->get();
+    }
+
     protected $fillable = [
         "name",
         "image",

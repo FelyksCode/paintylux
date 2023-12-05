@@ -2,17 +2,17 @@
 use App\Models\ProductType;
 use function Livewire\Volt\{on, state};
 
-state(['types' => ProductType::all()]);
+state(['types' => ProductType::allOrdered()]);
 
 on([
     'type-created' => function () {
-        $this->types = ProductType::all();
+        $this->types = ProductType::allOrdered();
     },
 ]);
 
 $delete = function ($id) {
     ProductType::find($id)->delete();
-    $this->types = ProductType::all();
+    $this->types = ProductType::allOrdered();
 };
 
 ?>
@@ -34,7 +34,7 @@ $delete = function ($id) {
                 <div class="flex items-center space-x-3">
                     <x-icons.delete-button class="text-[rgb(var(--red-rgb))]"
                         x-on:click.prevent="$dispatch('open-modal', 'confirm-type-{{ $type->id }}-deletion')" />
-                    <a href="" wire:navigate>
+                    <a href="{{ route('admin.products.edit.type', ['id' => $type->id]) }}" wire:navigate>
                         <x-icons.edit-button />
                     </a>
                 </div>

@@ -21,7 +21,7 @@ $toggleVerify = function ($id) {
 <section class="std-section space-y-10 py-5">
     <!-- Header -->
     <section class="space-y-2">
-        <x-header-count :title="__('User')" :count="count(User::all())" />
+        <x-header-count :title="__('User')" :count="User::all()->count()" />
         <div class="text-inactive text-xl">
             {{ __('Kelola pengguna Paintylux.') }}
         </div>
@@ -29,7 +29,7 @@ $toggleVerify = function ($id) {
 
     <!-- Admins -->
     <section class="space-y-4">
-        <x-header-count :title="__('Admin')" :count="count(User::admins())" small />
+        <x-header-count :title="__('Admin')" :count="User::admins()->count()" small />
         @forelse (User::admins() as $user)
             <x-admin.summary-box
                 class="flex flex-col space-y-8 min-[850px]:flex-row min-[850px]:items-center min-[850px]:justify-between min-[850px]:space-y-0">
@@ -98,7 +98,7 @@ $toggleVerify = function ($id) {
 
     <!-- Non-admins -->
     <section class="space-y-4">
-        <x-header-count :title="__('Pengguna Biasa')" :count="count(User::nonAdmins())" small />
+        <x-header-count :title="__('Pengguna Biasa')" :count="User::nonAdmins()->count()" small />
         @forelse (User::nonAdmins() as $user)
             <x-admin.summary-box
                 class="flex flex-col space-y-8 min-[850px]:flex-row min-[850px]:items-center min-[850px]:justify-between min-[850px]:space-y-0"

@@ -2,7 +2,6 @@
 
 use App\Models\Project;
 
-use Livewire\WithFileUploads;
 use function Livewire\Volt\{mount, layout, rules, state, usesFileUploads};
 
 usesFileUploads();
@@ -57,7 +56,7 @@ $update = function () {
     }
 
     // Redirect back to index
-    return $this->redirect(route('admin-projects'), navigate: true);
+    return $this->redirect(route('admin.projects'), navigate: true);
 };
 
 ?>
@@ -66,7 +65,7 @@ $update = function () {
     <!-- Header -->
     <section class="space-y-2">
         <div class="flex items-center space-x-4">
-            <x-icons.back-button :link="route('admin-projects')" class="h-11 w-11" />
+            <x-icons.back-button :link="route('admin.projects')" class="h-11 w-11" />
             <div>
                 <div class="text-4xl font-light tracking-tighter min-[600px]:text-5xl">{{ __('Edit Proyek ') }}<strong
                         class="font-bold">{{ $name }}</strong></div>
@@ -80,7 +79,7 @@ $update = function () {
     <!-- Create new project -->
     <section
         class="flex flex-col space-y-10 min-[1000px]:h-[400px] min-[1000px]:flex-row min-[1000px]:items-center min-[1000px]:space-x-10 min-[1000px]:space-y-0">
-        <img src="{{ asset(Storage::url($current_image)) }}" alt="{{ $name }}"
+        <img src="{{ asset(Storage::url($this->current_image)) }}" alt="{{ $this->name }}"
             class="h-[250px] rounded-xl object-cover min-[1000px]:h-full min-[1000px]:w-1/2">
         <form wire:submit="update" class="w-full max-w-full space-y-4" enctype="multipart/form-data">
             <!-- Name -->

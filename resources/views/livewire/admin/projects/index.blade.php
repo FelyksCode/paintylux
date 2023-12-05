@@ -120,8 +120,8 @@ $delete = function ($id) {
 
         <!-- Projects -->
         <section class="w-full space-y-6">
-            <x-header-count :title="__('Semua proyek')" :count="count(Project::all())" small />
-            @forelse (Project::all() as $project)
+            <x-header-count :title="__('Semua proyek')" :count="Project::all()->count()" small />
+            @forelse (Project::allOrdered() as $project)
                 <!-- Item -->
                 <div
                     class="flex flex-col space-y-4 min-[1250px]:h-[250px] min-[1250px]:flex-row min-[1250px]:items-center min-[1250px]:space-x-4 min-[1250px]:space-y-0">
@@ -143,7 +143,7 @@ $delete = function ($id) {
                         <div class="flex items-center space-x-3">
                             <x-icons.delete-button class="text-[rgb(var(--red-rgb))]"
                                 x-on:click.prevent="$dispatch('open-modal', 'confirm-project-{{ $project->id }}-deletion')" />
-                            <a href="{{ route('admin-projects.edit', ['id' => $project->id]) }}" wire:navigate>
+                            <a href="{{ route('admin.projects.edit', ['id' => $project->id]) }}" wire:navigate>
                                 <x-icons.edit-button />
                             </a>
                         </div>

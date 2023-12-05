@@ -1,3 +1,7 @@
+@php
+    use App\Models\ProductType;
+@endphp
+
 <x-app-layout>
     <section class="std-section py-4">
         <!-- Title -->
@@ -12,41 +16,18 @@
 
         <!-- Grid -->
         <div class="grid w-full grid-cols-3 gap-8">
-            <!-- Type -->
-            <a href="{{ route('products') }}" class="smooth flex flex-col items-center space-y-8 hover:scale-105">
-                <div
-                    class="flex h-[300px] w-full items-center justify-center rounded-xl border border-[rgb(var(--fg-rgb))] px-8 py-4">
-                    <img src="{{ asset('assets/products/exterior-interior.png') }}" alt="Exterior & Interior"
-                        class="float w-[500px]">
-                </div>
-                <div class="text-upperwide text-xl">
-                    {{ __('Exterior & Interior') }}
-                </div>
-            </a>
-
-            <!-- Type -->
-            <a href="{{ route('products') }}" class="smooth flex flex-col items-center space-y-8 hover:scale-105">
-                <div
-                    class="flex h-[300px] w-full items-center justify-center rounded-xl border border-[rgb(var(--fg-rgb))] px-8 py-4">
-                    <img src="{{ asset('assets/products/weather-shield.png') }}" alt="Exterior & Interior"
-                        class="float w-[500px] [animation-duration:7s]">
-                </div>
-                <div class="text-upperwide text-xl">
-                    {{ __('Weather Shield') }}
-                </div>
-            </a>
-
-            <!-- Type -->
-            <a href="{{ route('products') }}" class="smooth flex flex-col items-center space-y-8 hover:scale-105">
-                <div
-                    class="flex h-[300px] w-full items-center justify-center rounded-xl border border-[rgb(var(--fg-rgb))] px-8 py-4">
-                    <img src="{{ asset('assets/products/alkali-sealer.png') }}" alt="Exterior & Interior"
-                        class="float w-[500px] [animation-duration:8s]">
-                </div>
-                <div class="text-upperwide text-xl">
-                    {{ __('Alkali Sealer') }}
-                </div>
-            </a>
+            @foreach (ProductType::allOrdered() as $type)
+                <a href="{{ route('products') }}" class="smooth flex flex-col items-center space-y-8 hover:scale-105">
+                    <div
+                        class="flex h-[300px] w-full items-center justify-center rounded-xl border border-[rgb(var(--fg-rgb))] px-8 py-4">
+                        <img src="{{ asset(Storage::url($type->image)) }}" alt="{{ __($type->name) }}"
+                            class="float w-[500px]" style="animation-duration: {{ 6 + $loop->index }}s">
+                    </div>
+                    <div class="text-upperwide text-xl">
+                        {{ __($type->name) }}
+                    </div>
+                </a>
+            @endforeach
         </div>
     </section>
 </x-app-layout>

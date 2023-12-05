@@ -21,7 +21,7 @@ Route::view('/', 'index')
 Route::view('produk', 'products.index')
     ->name('products');
 
-Route::view('proyek', 'projects.index')
+Route::view('proyek', 'projects')
     ->name('projects');
 
 Volt::route('hubungi-kami', 'contact')

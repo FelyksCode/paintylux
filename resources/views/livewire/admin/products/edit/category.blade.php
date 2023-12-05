@@ -1,26 +1,20 @@
 <?php
 
-use App\Models\ProductType;
 use App\Models\ProductCategory;
+use App\Models\ProductType;
 
-use function Livewire\Volt\{on, state, rules};
+use function Livewire\Volt\{mount, layout, rules, state};
 
-state([
-    'price' => '',
-    'weight' => '',
-    'container' => '',
-    'product_type_id' => '',
-    'types' => ProductType::allOrdered(),
-]);
+state(['category' => fn($id) => ProductCategory::findOrFail($id)])->locked();
 
-on([
-    'type-created' => function () {
-        $this->types = ProductType::allOrdered();
-    },
-    'type-deleted' => function () {
-        $this->types = ProductType::allOrdered();
-    },
-]);
+state(['price', 'weight', 'container', 'product_type_id']);
+
+mount(function () {
+    $this->price = $this->category->price;
+    $this->weight = $this->category->weight;
+    $this->container = $this->category->container;
+    $this->product_type_id = $this->category->product_type_id;
+});
 
 rules([
     'price' => ['required', 'decimal:0,2', 'min:0'],
@@ -41,35 +35,45 @@ rules([
     'product_type_id.exists' => 'Mohon memilih tipe yang valid.',
 ]);
 
-$create = function () {
+layout('layouts.admin');
+
+$update = function () {
     // Validate
     $validated = $this->validate();
 
-    // Create new category
-    ProductCategory::create($validated);
+    // Update category
+    $this->category->update($validated);
 
-    // Clear states
-    $this->price = '';
-    $this->weight = '';
-    $this->container = '';
-    $this->product_type_id = '';
-
-    // Dispatch event
-    $this->dispatch('category-created');
+    // Redirect back to index
+    return $this->redirect(route('admin.products'), navigate: true);
 };
 
 ?>
 
-<div class="w-full space-y-4">
-    <div class="text-upperwide text-xl">{{ __('Tambahkan Kategori') }}</div>
-    <form wire:submit="create" class="w-full max-w-full space-y-4 px-0">
+<section class="std-section space-y-10 py-5">
+    <!-- Header -->
+    <section class="space-y-2">
+        <div class="flex items-center space-x-4">
+            <x-icons.back-button :link="route('admin.products')" class="h-11 w-11" />
+            <div>
+                <div class="text-4xl font-light tracking-tighter min-[600px]:text-5xl">{{ __('Edit Kategori ') }}<strong
+                        class="font-bold">{{ $this->category->type->name }} {{ $this->container }} {{ $this->weight }}
+                        kg</strong></div>
+                <div class="text-inactive text-lg min-[600px]:text-xl">
+                    {{ __('Ubah informasi mengenai warna ini.') }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <form wire:submit="update" class="w-full space-y-4">
         <!-- Type -->
         <div>
             <x-input-label for="product_type_id" :value="__('Tipe')" />
             <select wire:model="product_type_id" id="product_type_id" name="product_type_id"
                 class="mt-1 block w-full rounded-md text-[rgb(var(--bg-rgb))]">
                 <option value="" disabled>Pilih satu tipe</option>
-                @foreach ($this->types as $type)
+                @foreach (ProductType::all() as $type)
                     <option value="{{ $type->id }}">{{ $type->name }}</option>
                 @endforeach
             </select>
@@ -107,7 +111,7 @@ $create = function () {
         </div>
 
         <x-primary-button>
-            {{ __('Tambah Kategori') }}
+            {{ __('Ubah') }}
         </x-primary-button>
     </form>
-</div>
+</section>

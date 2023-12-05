@@ -1,15 +1,20 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Message;
 
 use App\Livewire\Forms\ContactForm;
 
-use function Livewire\Volt\form;
-use function Livewire\Volt\layout;
+use function Livewire\Volt\{form, layout, mount};
 
 layout('layouts.app');
 
 form(ContactForm::class);
+
+mount(function () {
+    $this->form->sender = Auth::check() ? Auth::user()->name : '';
+    $this->form->contact = Auth::check() ? Auth::user()->email : '';
+});
 
 $send = function () {
     $validated = $this->form->validate();

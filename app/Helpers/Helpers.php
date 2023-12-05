@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
+
 function error_message($attribute, $error = "required")
 {
     switch ($error) {
@@ -38,4 +40,9 @@ function format_price($price)
     $formatted_price = number_format($price, 2, ',', '.');
 
     return 'IDR ' . $formatted_price;
+}
+
+function allOrdered(Model $model)
+{
+    return $model::orderByDesc('created_at')->get();
 }

@@ -15,6 +15,7 @@ on([
 $delete = function ($id) {
     ProductCategory::find($id)->delete();
     $this->categories = ProductCategory::allOrdered();
+    $this->dispatch('type-deleted');
 };
 
 ?>
@@ -34,7 +35,7 @@ $delete = function ($id) {
             <div class="flex items-center space-x-3">
                 <x-icons.delete-button class="text-[rgb(var(--red-rgb))]"
                     x-on:click.prevent="$dispatch('open-modal', 'confirm-category-{{ $category->id }}-deletion')" />
-                <a href="" wire:navigate>
+                <a href="{{ route('admin.products.edit.category', ['id' => $category->id]) }}" wire:navigate>
                     <x-icons.edit-button />
                 </a>
             </div>

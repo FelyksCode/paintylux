@@ -30,23 +30,23 @@ $logout = function (Logout $logout) {
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 min-[1000px]:-my-px min-[1000px]:ms-10 min-[1000px]:flex">
-                    <x-nav-link :href="route('admin-orders')" :active="request()->routeIs('admin-orders')" wire:navigate
+                    <x-nav-link :href="route('admin.orders')" :active="request()->routeIs('admin.orders')" wire:navigate
                         class="float-in-down opacity-0 [animation-delay:0.2s]">
                         {{ __('Order') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin-messages')" :active="request()->routeIs('admin-messages')" wire:navigate
+                    <x-nav-link :href="route('admin.messages')" :active="request()->routeIs('admin.messages')" wire:navigate
                         class="float-in-down opacity-0 [animation-delay:0.4s]">
                         {{ __('Pesan') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin-products')" :active="request()->routeIs('admin-products')" wire:navigate
+                    <x-nav-link :href="route('admin.products')" :active="request()->routeIs('admin.products')" wire:navigate
                         class="float-in-down opacity-0 [animation-delay:0.6s]">
                         {{ __('Produk') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin-projects')" :active="request()->routeIs('admin-projects')" wire:navigate
+                    <x-nav-link :href="route('admin.projects')" :active="request()->routeIs('admin.projects')" wire:navigate
                         class="float-in-down opacity-0 [animation-delay:0.8s]">
                         {{ __('Proyek') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin-users')" :active="request()->routeIs('admin-users')" wire:navigate
+                    <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')" wire:navigate
                         class="float-in-down opacity-0 [animation-delay:1s]">
                         {{ __('User') }}
                     </x-nav-link>
@@ -112,22 +112,22 @@ $logout = function (Logout $logout) {
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden min-[1000px]:hidden">
         <div class="space-y-1 pb-3 pt-2">
-            <x-responsive-nav-link :href="route('admin-orders')" :active="request()->routeIs('admin-orders')" wire:navigate class="float-in-down opacity-0">
+            <x-responsive-nav-link :href="route('admin.orders')" :active="request()->routeIs('admin.orders')" wire:navigate class="float-in-down opacity-0">
                 {{ __('Order') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin-messages')" :active="request()->routeIs('admin-messages')" wire:navigate
+            <x-responsive-nav-link :href="route('admin.messages')" :active="request()->routeIs('admin.messages')" wire:navigate
                 class="float-in-down opacity-0 [animation-delay:0.1s]">
                 {{ __('Pesan') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin-products')" :active="request()->routeIs('admin-products')" wire:navigate
+            <x-responsive-nav-link :href="route('admin.products')" :active="request()->routeIs('admin.products.*')" wire:navigate
                 class="float-in-down opacity-0 [animation-delay:0.2s]">
                 {{ __('Produk') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin-projects')" :active="request()->routeIs('admin-projects.*')" wire:navigate
+            <x-responsive-nav-link :href="route('admin.projects')" :active="request()->routeIs('admin.projects.*')" wire:navigate
                 class="float-in-down opacity-0 [animation-delay:0.3s]">
                 {{ __('Proyek') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin-users')" :active="request()->routeIs('admin-users')" wire:navigate
+            <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')" wire:navigate
                 class="float-in-down opacity-0 [animation-delay:0.4s]">
                 {{ __('User') }}
             </x-responsive-nav-link>

@@ -33,11 +33,11 @@ class ContactForm extends Form
         'content.max' => 'Pesan yang diisi terlalu panjang.',
     ];
 
-    public function boot()
-    {
-        $this->sender = Auth::check() ? Auth::user()->name : $this->sender;
-        $this->contact = Auth::check() ? Auth::user()->email : $this->contact;
-    }
+    // public function boot()
+    // {
+    //     $this->sender = Auth::check() ? Auth::user()->name : '';
+    //     $this->contact = Auth::check() ? Auth::user()->email : '';
+    // }
 
     public function rules()
     {

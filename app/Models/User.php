@@ -27,14 +27,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->orders()->where('finished', true);
     }
 
+    public static function allOrdered()
+    {
+        return self::orderByDesc('created_at')->get();
+    }
+
     public static function nonAdmins()
     {
-        return self::where('is_admin', false)->get();
+        return self::orderByDesc('created_at')->where('is_admin', false)->get();
     }
 
     public static function admins()
     {
-        return self::where('is_admin', true)->get();
+        return self::orderByDesc('created_at')->where('is_admin', true)->get();
     }
 
     /**
