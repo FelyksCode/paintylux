@@ -1,5 +1,5 @@
 <?php
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth, Gate};
 use App\Models\Color;
 use App\Models\ProductType;
 use App\Models\ProductCategory;
@@ -56,6 +56,7 @@ $select_color = function ($id, $hex) {
 
 $order = function () {
     if (!Auth::check()) {
+        Session::put('url.intended', route('products.type', ['slug' => $this->type->slug()]));
         return $this->redirect(route('login'), navigate: true);
     }
 
@@ -132,7 +133,7 @@ $order = function () {
                     class="grid grid-cols-6 gap-4 min-[600px]:grid-cols-10 min-[750px]:grid-cols-12 min-[1000px]:grid-cols-8 min-[1000px]:grid-cols-8 min-[1250px]:grid-cols-10">
                     @foreach ($this->colors as $color)
                         <button wire:click="select_color({{ $color->id }}, '{{ $color->hex }}')"
-                            class="@if ($this->color_id === $color->id) ring-2 ring-offset-2 ring-[rgba(var(--fg-rgb),0.2)] @endif smooth aspect-square h-[50px] w-[50px] cursor-pointer rounded-full shadow-md shadow-[rgba(var(--fg-rgb),0.3)] hover:scale-105"
+                            class="@if ($this->color_id === $color->id) ring-2 ring-offset-2 ring-[rgba(var(--fg-rgb),0.4)] @endif smooth aspect-square h-[50px] w-[50px] cursor-pointer rounded-full shadow-md shadow-[rgba(var(--fg-rgb),0.3)] hover:scale-105"
                             style="background-color: #{{ $color->hex }}"></button>
                     @endforeach
                 </div>
