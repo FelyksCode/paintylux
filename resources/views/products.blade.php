@@ -3,6 +3,7 @@
 @endphp
 
 <x-app-layout>
+    <x-slot:title>{{ __('Pilih Produk') }}</x-slot>
     <section class="std-section py-4">
         <!-- Title -->
         <div class="mb-[50px] space-y-2 text-center">
@@ -17,8 +18,8 @@
         <!-- Grid -->
         <div class="grid w-full grid-cols-1 gap-8 xl:grid-cols-3">
             @foreach (ProductType::allOrdered() as $type)
-                <a href="{{ route('products') }}"
-                    class="smooth flex flex-col items-center space-y-4 hover:scale-105 xl:space-y-8">
+                <a href="{{ route('products.type', ['slug' => $type->slug()]) }}"
+                    class="smooth flex flex-col items-center space-y-4 hover:scale-105 xl:space-y-8" wire:navigate>
                     <div
                         class="flex h-full w-fit items-center justify-center rounded-xl border border-[rgb(var(--fg-rgb))] px-8 py-4 min-[400px]:h-[300px]">
                         <img src="{{ asset(Storage::url($type->image)) }}" alt="{{ __($type->name) }}"

@@ -3,6 +3,7 @@
 @endphp
 
 <x-app-layout>
+    <x-slot:title>{{ __('Proyek') }}</x-slot>
     <section
         class="std-section flex flex-col space-y-6 py-4 min-[1100px]:flex-row min-[1100px]:space-x-16 min-[1100px]:space-y-0">
         <!-- Title -->

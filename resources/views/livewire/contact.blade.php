@@ -28,6 +28,8 @@ $send = function () {
 
 ?>
 
+<x-slot:title>{{ __('Hubungi Kami') }}</x-slot>
+
 <section
     class="std-section flex flex-col space-y-10 min-[950px]:flex-row min-[950px]:items-center min-[950px]:space-x-8 min-[950px]:space-y-0">
     <!-- Contact form -->

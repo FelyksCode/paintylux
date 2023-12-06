@@ -1,4 +1,5 @@
 <x-app-layout>
+    <x-slot:title>{{ __('Edit Profil') }}</x-slot>
     <section class="std-section space-y-6">
         <div class="flex items-center space-x-4">
             <x-icons.back-button :link="route('profile')" class="h-11 w-11" />

@@ -41,8 +41,3 @@ function format_price($price)
 
     return 'IDR ' . $formatted_price;
 }
-
-function allOrdered(Model $model)
-{
-    return $model::orderByDesc('created_at')->get();
-}

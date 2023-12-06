@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -18,25 +17,19 @@ use Livewire\Volt\Volt;
 Route::view('/', 'index')
     ->name('index');
 
-Route::view('produk', 'products.index')
-    ->name('products');
-
 Route::view('proyek', 'projects')
     ->name('projects');
 
 Volt::route('hubungi-kami', 'contact')
     ->name('contact');
 
-Volt::route('checkout', 'checkout')
-    ->middleware(['auth', 'non-admin'])
-    ->name('checkout');
-
 Route::group(['middleware' => 'auth', 'prefix' => 'profile'], function () {
     Route::view('/', 'profile.index')
         ->name('profile');
     Route::view('edit', 'profile.edit')
-        ->name('edit-profile');
+        ->name('profile.edit');
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/products.php';
 require __DIR__ . '/admin.php';

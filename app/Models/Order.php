@@ -23,4 +23,6 @@ class Order extends Model
     {
         return self::where('finished', true)->get();
     }
+
+    protected $fillable = ['user_id'];
 }

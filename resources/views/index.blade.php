@@ -1,3 +1,7 @@
+@php
+    use App\Models\Color;
+@endphp
+
 <x-app-layout>
     <section class="std-section space-y-16">
         <div class="absolute left-0 top-0 z-[-1] opacity-70">
@@ -49,12 +53,10 @@
                     {{ __('Cat tembok berkualitas tinggi dengan berbagai pilihan warna yang indah') }}
                 </div>
                 <div class="flex items-center space-x-12">
-                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--green-rgb))]"></div>
-                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--blue-rgb))]"></div>
-                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--black-rgb))]"></div>
-                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--red-rgb))]"></div>
-                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--gray-rgb))]"></div>
-                    <div class="h-[60px] w-[60px] rounded-full bg-[rgb(var(--orange-rgb))]"></div>
+                    @foreach (Color::allOrdered() as $color)
+                        <div class="h-[60px] w-[60px] rounded-full" style="background-color: #{{ $color->hex }}">
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="">

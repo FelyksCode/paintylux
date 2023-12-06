@@ -28,7 +28,7 @@ $logout = function (Logout $logout) {
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 min-[850px]:-my-px min-[850px]:ms-10 min-[850px]:flex">
-                    <x-nav-link :href="route('products')" :active="request()->routeIs('products')" wire:navigate
+                    <x-nav-link :href="route('products')" :active="request()->routeIs('products*')" wire:navigate
                         class="float-in-down opacity-0 [animation-delay:0.2s]">
                         {{ __('Produk') }}
                     </x-nav-link>
@@ -59,13 +59,13 @@ $logout = function (Logout $logout) {
             <!-- Auth links -->
             @guest
                 <div class="hidden items-center space-x-4 min-[850px]:flex">
-                    <a href="{{ route('login') }}" class="float-in-down opacity-0 [animation-delay:0.8s]">
+                    <a href="{{ route('login') }}" class="float-in-down opacity-0 [animation-delay:0.8s]" wire:navigate>
                         <x-secondary-button
                             class="{{ request()->routeIs('login') ? 'ring-2 ring-offset-2 ring-[rgb(var(--fg-rgb))]' : '' }} smooth h-fit !border-[rgb(var(--fg-rgb))] !bg-transparent text-[rgb(var(--fg-rgb))] shadow-none hover:opacity-75 focus:outline-[rgb(var(--fg-rgb))] focus:!ring-[rgb(var(--fg-rgb))]">
                             {{ __('Masuk') }}
                         </x-secondary-button>
                     </a>
-                    <a href="{{ route('register') }}" class="float-in-down opacity-0 [animation-delay:1s]">
+                    <a href="{{ route('register') }}" class="float-in-down opacity-0 [animation-delay:1s]" wire:navigate>
                         <x-danger-button
                             class="{{ request()->routeIs('register') ? 'ring-2 ring-offset-2 ring-[rgb(var(--acc-rgb))]' : '' }} h-fit shadow-none">
                             {{ __('Daftar') }}

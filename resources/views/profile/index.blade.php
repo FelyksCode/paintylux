@@ -1,4 +1,5 @@
 <x-app-layout>
+    <x-slot:title>{{ __('Profil') }}</x-slot>
     <section class="std-section space-y-8">
         <!-- Header -->
         <section class="@if (Auth::user()->is_admin) min-[950px]:min-h-[40vh] @endif flex flex-col space-y-6">
@@ -14,7 +15,7 @@
 
             <!-- Edit profile link -->
             <div class="flex flex-col space-y-2">
-                <a href="{{ route('edit-profile') }}" wire:navigate
+                <a href="{{ route('profile.edit') }}" wire:navigate
                     class="smooth group flex w-fit items-center space-x-2 border-b border-b-[rgb(var(--fg-rgb))] opacity-60 hover:opacity-100">
                     <x-icons.edit-button class="smooth !h-5 !w-5 group-hover:rotate-[-30deg]" />
                     <div class="text-upperwide text-lg">
