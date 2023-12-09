@@ -28,6 +28,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $activeOrder ? $activeOrder->totalQuantity($minified) : 0;
     }
 
+    public function confirmedOrders()
+    {
+        return $this->orders()->where('confirmed', true)->orderByDesc('confirmed_at');
+    }
+
     public function ongoingOrders()
     {
         return $this->orders()->where('finished', false)->orderByDesc('confirmed_at');

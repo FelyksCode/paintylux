@@ -49,11 +49,23 @@
 
                 <!-- List -->
                 <div class="space-y-4">
-                    @forelse (Auth::user()->ongoingOrders as $order)
+                    @forelse (Auth::user()->confirmedOrders as $order)
                         <div
-                            class="smooth flex flex-col space-y-4 rounded-lg bg-[rgb(var(--blue-rgb))] px-10 py-6 text-[rgb(var(--white-rgb))] min-[950px]:flex-row min-[950px]:justify-between min-[950px]:space-y-0">
+                            class="smooth @if ($order->finished) bg-[rgb(var(--fg-rgb))] text-[rgb(var(--bg-rgb))] @else bg-[rgb(var(--blue-rgb))] text-[rgb(var(--white-rgb))] @endif flex flex-col space-y-4 rounded-lg px-10 py-6 min-[950px]:flex-row min-[950px]:justify-between min-[950px]:space-y-0">
                             <!-- Left -->
                             <div class="space-y-4 min-[950px]:space-y-2">
+                                <div>
+                                    <div class="text-upperwide text-sm text-[rgba(var(--white-rgb),0.6)]">
+                                        {{ __('Status') }}
+                                    </div>
+                                    <div class="font-bold">
+                                        @if ($order->finished)
+                                            {{ __('Selesai ' . get_timestamp($order->finished_at)) }}
+                                        @else
+                                            {{ __('Sedang diproses') }}
+                                        @endif
+                                    </div>
+                                </div>
                                 <div>
                                     <div class="text-upperwide text-sm text-[rgba(var(--white-rgb),0.6)]">
                                         {{ __('Waktu pemesanan') }}
