@@ -7,6 +7,8 @@ use App\Livewire\Forms\ContactForm;
 
 use function Livewire\Volt\{form, layout, mount};
 
+use Masmerise\Toaster\Toaster;
+
 layout('layouts.app');
 
 form(ContactForm::class);
@@ -20,8 +22,9 @@ $send = function () {
     $validated = $this->form->validate();
     Message::create($validated);
     $this->dispatch('message-sent');
-    $this->form->sender = '';
-    $this->form->contact = '';
+    Toaster::success('Pesan Anda telah dikirim.');
+    $this->form->sender = Auth::check() ? Auth::user()->name : '';
+    $this->form->contact = Auth::check() ? Auth::user()->email : '';
     $this->form->location = '';
     $this->form->content = '';
 };
@@ -90,10 +93,6 @@ $send = function () {
             <x-primary-button>
                 {{ __('Kirim Pesan') }}
             </x-primary-button>
-
-            <x-action-message class="absolute flex w-full justify-center" on="message-sent">
-                {{ __('Pesan Anda telah dikirim.') }}
-            </x-action-message>
         </form>
     </section>
 

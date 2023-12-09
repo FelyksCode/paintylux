@@ -23,7 +23,7 @@
                     <div
                         class="flex h-full w-fit items-center justify-center rounded-xl border border-[rgb(var(--fg-rgb))] px-8 py-4 min-[400px]:h-[300px]">
                         <img src="{{ asset(Storage::url($type->image)) }}" alt="{{ __($type->name) }}"
-                            class="float h-full w-full xl:h-auto xl:w-[500px]"
+                            class="float h-full w-full xl:h-auto xl:w-[500px]" loading="lazy"
                             style="animation-duration: {{ 6 + $loop->index }}s">
                     </div>
                     <div class="text-upperwide text-center text-xl">

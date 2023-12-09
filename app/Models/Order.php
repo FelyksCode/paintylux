@@ -9,20 +9,65 @@ class Order extends Model
 {
     use HasFactory;
 
-    public function orderDetails()
+    public $orderDetails = [];
+
+    public function confirmOrder()
     {
-        return $this->hasMany(OrderDetail::class);
+        $this->update(['confirmed' => true, 'confirmed_at' => now()]);
     }
 
-    static function ongoing()
+    public function finishOrder()
     {
-        return self::where('finished', false)->get();
+        $this->update(['finished' => true, 'finished_at' => now()]);
     }
 
-    static function finished()
+    public function getOrderDetails()
     {
-        return self::where('finished', true)->get();
+        $this->orderDetails = $this->hasMany(OrderDetail::class)
+            ->with('category')
+            ->with('color')
+            ->orderBy('created_at');
+        return $this->orderDetails;
     }
 
-    protected $fillable = ['user_id'];
+    public function totalQuantity($minified = false)
+    {
+        if (empty($this->orderDetails)) {
+            $this->getOrderDetails();
+        }
+        $totalQuantity = $this->orderDetails->sum('quantity');
+        return ($totalQuantity > 99 && $minified) ? '99+' : (int) $totalQuantity;
+    }
+
+    public function totalSum()
+    {
+        if (empty($this->orderDetails)) {
+            $this->getOrderDetails();
+        }
+        $subtotals = $this->orderDetails->get()
+            ->map(fn ($orderDetail) => $orderDetail->subtotal());
+        return $subtotals->sum();
+    }
+
+    public function totalWeight()
+    {
+        if (empty($this->orderDetails)) {
+            $this->getOrderDetails();
+        }
+        $weights = $this->orderDetails->get()
+            ->map(fn ($orderDetail) => $orderDetail->totalWeight());
+        return $weights->sum();
+    }
+
+    public static function ongoing()
+    {
+        return self::where('finished', false)->orderByDesc('confirmed_at')->get();
+    }
+
+    public static function finished()
+    {
+        return self::where('finished', true)->orderByDesc('finished_at')->get();
+    }
+
+    protected $fillable = ['user_id', 'confirmed', 'finished', 'confirmed_at', 'finished_at'];
 }

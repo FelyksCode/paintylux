@@ -19,6 +19,7 @@
     <main class="mt-[var(--navbar-height)] py-4" x-cloak x-data="{ show: false, showPage() { setTimeout(() => this.show = true, 100) } }" x-transition.1500ms x-show="show"
         x-init="showPage">
         {{ $slot }}
+        <x-toaster-hub />
     </main>
 
     <!-- Footer -->
@@ -26,6 +27,7 @@
 
     <!-- WhatsApp float -->
     <x-whats-app-float />
+
 </body>
 
 </html>

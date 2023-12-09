@@ -45,13 +45,73 @@
             <!-- Orders -->
             <section>
                 <!-- Header -->
-                <div class="text-upperwide mb-4 text-3xl">
-                    {{ __('Riwayat pemesanan') }}
-                </div>
+                <x-header-count :title="__('Riwayat Pemesanan')" :count="Auth::user()->ongoingOrders->count()" small class="mb-4" />
 
                 <!-- List -->
-                <div class="text-inactive text-xl">
-                    {{ __('Anda belum pernah melakukan pemesanan.') }}
+                <div class="space-y-4">
+                    @forelse (Auth::user()->ongoingOrders as $order)
+                        <div
+                            class="smooth flex flex-col space-y-4 rounded-lg bg-[rgb(var(--blue-rgb))] px-10 py-6 text-[rgb(var(--white-rgb))] min-[950px]:flex-row min-[950px]:justify-between min-[950px]:space-y-0">
+                            <!-- Left -->
+                            <div class="space-y-4 min-[950px]:space-y-2">
+                                <div>
+                                    <div class="text-upperwide text-sm text-[rgba(var(--white-rgb),0.6)]">
+                                        {{ __('Waktu pemesanan') }}
+                                    </div>
+                                    <div>
+                                        {{ get_timestamp($order->confirmed_at) }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-upperwide text-sm text-[rgba(var(--white-rgb),0.6)]">
+                                        {{ __('Jumlah Produk') }}
+                                    </div>
+                                    <div>
+                                        {{ $order->totalQuantity() }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-upperwide text-sm text-[rgba(var(--white-rgb),0.6)]">
+                                        {{ __('Total Berat') }}
+                                    </div>
+                                    <div>
+                                        {{ $order->totalWeight() }} kg
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right -->
+                            <div
+                                class="flex flex-col justify-between space-y-4 min-[950px]:items-end min-[950px]:text-right">
+                                <div>
+                                    <div class="text-upperwide text-sm text-[rgba(var(--white-rgb),0.6)]">
+                                        {{ __('Total Harga') }}
+                                    </div>
+                                    <div class="text-2xl font-bold">
+                                        {{ format_price($order->totalSum()) }}
+                                    </div>
+                                </div>
+                                <div class="flex flex-col space-y-1 min-[950px]:items-end">
+                                    <div class="text-upperwide text-sm text-[rgba(var(--white-rgb),0.6)]">
+                                        {{ __('Rincian') }}
+                                    </div>
+                                    @foreach ($order->getOrderDetails as $detail)
+                                        <div class="flex items-center space-x-2">
+                                            <div class="aspect-square h-[20px] w-[20px] rounded-full border border-[rgba(var(--fg-rgb),0.4)]"
+                                                style="background-color: #{{ $detail->color->hex }}"></div>
+                                            <div>{{ $detail->name() }} <span class="font-bold">({{ $detail->quantity }} x
+                                                    {{ format_price($detail->subtotal(), $prefix = false) }})</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-inactive text-xl">
+                            {{ __('Anda belum pernah melakukan pemesanan.') }}
+                        </div>
+                    @endforelse
                 </div>
             </section>
         @endunless

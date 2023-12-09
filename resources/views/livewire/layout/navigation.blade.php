@@ -1,6 +1,10 @@
 <?php
+use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
 
 use App\Livewire\Actions\Logout;
+
+use function Livewire\Volt\{mount, on};
 
 $logout = function (Logout $logout) {
     $logout();
@@ -28,7 +32,9 @@ $logout = function (Logout $logout) {
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 min-[850px]:-my-px min-[850px]:ms-10 min-[850px]:flex">
-                    <x-nav-link :href="route('products')" :active="request()->routeIs('products*')" wire:navigate
+                    <x-nav-link :href="route('products')" :active="request()->routeIs('products*') ||
+                        (str_starts_with(parse_url(url()->previous())['path'] ?? '', '/produk') &&
+                            request()->is('livewire/update'))" wire:navigate
                         class="float-in-down opacity-0 [animation-delay:0.2s]">
                         {{ __('Produk') }}
                     </x-nav-link>
@@ -41,16 +47,18 @@ $logout = function (Logout $logout) {
                         {{ __('Hubungi Kami') }}
                     </x-nav-link>
                     @if (Auth::check() && !Auth::user()->is_admin)
-                        <x-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate
-                            class="float-in-down opacity-0 [animation-delay:0.8s]">
+                        <x-nav-link :href="route('checkout')" :active="request()->routeIs('checkout') ||
+                            (url()->previous() === route('checkout') && request()->is('livewire/update'))" class="group relative" wire:navigate
+                            class="float-in-down group opacity-0 [animation-delay:0.8s]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
-                            <div
-                                class="@if (request()->routeIs('checkout')) bg-[rgb(var(--acc-rgb))] @else bg-[rgb(var(--gray-rgb))] group-hover:bg-[rgb(var(--fg-rgb))] @endif smooth absolute bottom-[15px] left-[18px] flex h-[15px] w-[15px] items-center justify-center rounded-full text-[8px] tracking-tighter text-[rgb(var(--bg-rgb))]">
-                                0</div>
+                            <div wire:order-updated.window="$refresh"
+                                class="@if (request()->routeIs('checkout') || (url()->previous() === route('checkout') && request()->is('livewire/update'))) bg-[rgb(var(--acc-rgb))] @else bg-[rgb(var(--gray-rgb))] group-hover:bg-[rgb(var(--fg-rgb))] @endif smooth absolute bottom-[15px] left-[18px] flex h-[15px] w-[15px] items-center justify-center rounded-full text-[8px] tracking-tighter text-[rgb(var(--bg-rgb))]">
+                                {{ Auth::user()->cartQuantity($minified = true) }}
+                            </div>
                         </x-nav-link>
                     @endif
                 </div>
@@ -133,7 +141,9 @@ $logout = function (Logout $logout) {
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden min-[850px]:hidden">
         <div class="space-y-1 pb-3 pt-2">
-            <x-responsive-nav-link :href="route('products')" :active="request()->routeIs('products')" wire:navigate class="float-in-down opacity-0">
+            <x-responsive-nav-link :href="route('products')" :active="request()->routeIs('products*') ||
+                (str_starts_with(parse_url(url()->previous())['path'] ?? '', '/produk') &&
+                    request()->is('livewire/update'))" wire:navigate class="float-in-down opacity-0">
                 {{ __('Produk') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('projects')" :active="request()->routeIs('projects')" wire:navigate
@@ -145,16 +155,17 @@ $logout = function (Logout $logout) {
                 {{ __('Hubungi Kami') }}
             </x-responsive-nav-link>
             @if (Auth::check() && !Auth::user()->is_admin)
-                <x-responsive-nav-link :href="route('checkout')" :active="request()->routeIs('checkout')" class="group relative" wire:navigate
-                    class="float-in-down opacity-0 [animation-delay:0.3s]">
+                <x-responsive-nav-link :href="route('checkout')" :active="request()->routeIs('checkout') ||
+                    (url()->previous() === route('checkout') && request()->is('livewire/update'))" class="group relative" wire:navigate
+                    class="float-in-down group opacity-0 [animation-delay:0.3s]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="h-5 w-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                     </svg>
-                    <div
-                        class="@if (request()->routeIs('checkout')) bg-[rgb(var(--acc-rgb))] @else bg-[rgb(var(--gray-rgb))] group-hover:bg-[rgb(var(--fg-rgb))] @endif smooth absolute bottom-[15px] left-[18px] flex h-[15px] w-[15px] items-center justify-center rounded-full text-[8px] tracking-tighter text-[rgb(var(--bg-rgb))]">
-                        0</div>
+                    <div wire:order-updated.window.debounce.0ms="$refresh"
+                        class="@if (request()->routeIs('checkout') || (url()->previous() === route('checkout') && request()->is('livewire/update'))) bg-[rgb(var(--acc-rgb))] @else bg-[rgb(var(--gray-rgb))] group-hover:bg-[rgb(var(--fg-rgb))] @endif smooth absolute bottom-[2px] left-[24px] flex h-[15px] w-[15px] items-center justify-center rounded-full text-[8px] tracking-tighter text-[rgb(var(--bg-rgb))]">
+                        {{ Auth::user()->cartQuantity($minified = true) }}</div>
                 </x-responsive-nav-link>
             @endif
             @guest

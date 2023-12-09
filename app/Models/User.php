@@ -17,14 +17,25 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Order::class);
     }
 
+    public function activeOrder()
+    {
+        return $this->orders()->firstWhere('confirmed', false);
+    }
+
+    public function cartQuantity($minified = false)
+    {
+        $activeOrder = $this->activeOrder();
+        return $activeOrder ? $activeOrder->totalQuantity($minified) : 0;
+    }
+
     public function ongoingOrders()
     {
-        return $this->orders()->where('finished', false);
+        return $this->orders()->where('finished', false)->orderByDesc('confirmed_at');
     }
 
     public function finishedOrders()
     {
-        return $this->orders()->where('finished', true);
+        return $this->orders()->where('finished', true)->orderByDesc('finished_at');
     }
 
     public static function allOrdered()

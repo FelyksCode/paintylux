@@ -77,7 +77,8 @@
         <hr class="border border-[rgb(var(--white-rgb))]">
 
         <!-- Copyright -->
-        <div class="flex items-center justify-center space-x-4 text-sm">
+        <div
+            class="flex flex-col items-center space-y-1 text-sm min-[400px]:flex-row min-[400px]:justify-center min-[400px]:space-x-4 min-[400px]:space-y-0">
             <span>Copyright © 2023 Paintylux.</span>
             <x-application-logo light="true" class="!w-[120px]" />
         </div>

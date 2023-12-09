@@ -14,6 +14,11 @@ class ProductCategory extends Model
         return $this->belongsTo(ProductType::class, 'product_type_id');
     }
 
+    public function name()
+    {
+        return "{$this->type->name} $this->container $this->weight kg";
+    }
+
     public static function allOrdered()
     {
         return self::orderBy('product_type_id')->get();

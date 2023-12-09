@@ -1,12 +1,14 @@
 <?php
-use Illuminate\Support\Facades\{Auth, Gate};
+use Illuminate\Support\Facades\Auth;
 use App\Models\Color;
 use App\Models\ProductType;
 use App\Models\ProductCategory;
 use App\Models\Order;
 use App\Models\OrderDetail;
 
-use function Livewire\Volt\{layout, mount, state, rules};
+use function Livewire\Volt\{layout, mount, state, rules, placeholder};
+
+use Masmerise\Toaster\Toaster;
 
 layout('layouts.app');
 
@@ -37,10 +39,29 @@ rules([
     'color_id.required' => 'Mohon memilih warna.',
     'color_id.integer' => 'Mohon memilih warna yang valid.',
     'color_id.exists' => 'Mohon memilih warna yang valid.',
-    'product_category_id.required' => 'Mohon memilih tipe.',
-    'product_category_id.integer' => 'Mohon memilih tipe yang valid.',
-    'product_category_id.exists' => 'Mohon memilih tipe yang valid.',
+    'product_category_id.required' => 'Mohon memilih kategori.',
+    'product_category_id.integer' => 'Mohon memilih kategori yang valid.',
+    'product_category_id.exists' => 'Mohon memilih kategori yang valid.',
 ]);
+
+// placeholder('
+//     <div role="status" class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 rtl:space-x-reverse md:flex md:items-center">
+//         <div class="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
+//             <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+//                 <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+//             </svg>
+//         </div>
+//         <div class="w-full">
+//             <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+//             <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[480px] mb-2.5"></div>
+//             <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+//             <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[440px] mb-2.5"></div>
+//             <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[460px] mb-2.5"></div>
+//             <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+//         </div>
+//         <span class="sr-only">Loading...</span>
+//     </div>
+// ');
 
 $select_category = function ($id, $price) {
     $this->product_category_id = $id;
@@ -55,15 +76,33 @@ $select_color = function ($id, $hex) {
 };
 
 $order = function () {
+    // Redirect to login if not authenticated
     if (!Auth::check()) {
         Session::put('url.intended', route('products.type', ['slug' => $this->type->slug()]));
         return $this->redirect(route('login'), navigate: true);
     }
 
+    // Do nothing if admin
     if (Auth::check() && Auth::user()->is_admin) {
         return;
     }
+
+    // Validate
     $validated = $this->validate();
+
+    // Add order
+    OrderDetail::addOrder($this->quantity, $this->product_category_id, $this->color_id);
+
+    // Dispatch event
+    $this->dispatch('order-updated');
+    Toaster::success('Ditambah ke keranjang!');
+
+    // Clear states
+    $this->product_category_id = '';
+    $this->color_id = '';
+    $this->price = '';
+    $this->hex = '';
+    $this->quantity = 1;
 };
 
 ?>
@@ -71,7 +110,7 @@ $order = function () {
 <x-slot:title>{{ $type->name }}</x-slot>
 
 <section class="std-section overflow-x-hidden py-6">
-    <div class="mb-[75px] flex items-center space-x-4">
+    <div class="flex items-center space-x-4">
         <x-icons.back-button :link="route('products')" class="h-11 w-11" />
         <h2 class="text-5xl font-light tracking-tighter text-gray-800">
             {{ __($type->name) }}
@@ -79,7 +118,7 @@ $order = function () {
     </div>
     <div class="flex flex-col space-y-10 min-[1000px]:flex-row min-[1000px]:space-x-10 min-[1000px]:space-y-0">
         <!-- Image -->
-        <div class="relative w-full min-[1000px]:w-1/2">
+        <div class="relative mt-[100px] w-full min-[1000px]:w-1/2">
             <div class="float smooth absolute -top-[30px] left-0 z-[-1] flex aspect-square h-[150px] w-[150px] items-center justify-center rounded-full border border-[rgba(var(--fg-rgb),0.2)] text-7xl font-light [animation-duration:10s] min-[350px]:h-[250px] min-[350px]:w-[250px] min-[350px]:text-8xl min-[500px]:h-[350px] min-[500px]:w-[350px] min-[500px]:text-9xl min-[750px]:left-[60px] min-[1000px]:left-0 min-[1350px]:-left-[30px]"
                 style="background-color: {{ $this->hex ? "#{$this->hex}" : 'transparent' }}">
                 @unless ($this->color_id)
@@ -93,21 +132,27 @@ $order = function () {
         <div class="w-full space-y-10 min-[1000px]:-mt-[50px] min-[1000px]:w-1/2">
             <!-- Price -->
             <div class="text-3xl min-[350px]:text-4xl min-[500px]:text-5xl">
-                {{ $this->price !== 0 && $this->quantity > 0 ? format_price($this->price * $this->quantity) : 'IDR -' }}
+                {{ format_price((float) $this->price * (int) $this->quantity) }}
             </div>
 
             <!-- Quantity -->
             <div class="space-y-3 font-medium">
                 <div class="text-upperwide text-xl font-medium">{{ __('Jumlah') }}</div>
-                <x-text-input wire:model.live="quantity" id="quantity" name="quantity" type="text"
+                <x-text-input wire:model.live="quantity" id="quantity" name="quantity" type="number"
                     class="mt-1 block w-full" />
-                <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
 
                 @if (Auth::check() && Auth::user()->is_admin)
                     <div class="text-upperwide text-inactive opacity-75">Admin tidak dapat memesan</div>
                 @else
                     <!-- Order -->
-                    <x-primary-button wire:click="order">{{ __('Order') }}</x-primary-button>
+                    <div class="space-y-4">
+                        <x-primary-button wire:click="order">{{ __('Order') }}</x-primary-button>
+                        <div>
+                            <x-input-error :messages="$errors->get('quantity')" />
+                            <x-input-error :messages="$errors->get('product_category_id')" />
+                            <x-input-error :messages="$errors->get('color_id')" />
+                        </div>
+                    </div>
                 @endif
             </div>
             <hr class="border-[rgb(var(--fg-rgb))]">
@@ -123,7 +168,6 @@ $order = function () {
                         </button>
                     @endforeach
                 </div>
-                <x-input-error :messages="$errors->get('product_category_id')" class="mt-2" />
             </div>
 
             <!-- Colors -->
@@ -141,9 +185,9 @@ $order = function () {
                     <div class="text-inactive">
                         {{ __('Belum ada warna.') }}</div>
                 @endempty
-                <x-input-error :messages="$errors->get('color_id')" class="mt-2" />
             </div>
         </div>
+
     </div>
     </div>
 </section>

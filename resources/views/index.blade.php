@@ -30,7 +30,7 @@
                     </div>
                     <x-application-logo class="w-[300px] min-[1000px]:w-[400px] min-[1300px]:w-[600px]" />
                 </div>
-                <a href="{{ route('products') }}"
+                <a wire:navigate href="{{ route('products') }}"
                     class="smooth group flex w-fit items-center space-x-2 rounded-xl border border-[rgb(var(--acc-rgb))] px-8 py-2 text-[rgb(var(--acc-rgb))] hover:opacity-80">
                     <div
                         class="text-upperwide smooth text-lg opacity-90 group-hover:tracking-[0.15em] group-hover:opacity-100">

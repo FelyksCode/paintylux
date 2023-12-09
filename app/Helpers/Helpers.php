@@ -29,15 +29,19 @@ function error_message($attribute, $error = "required")
     return trans($message);
 }
 
-
 function get_date($timestamp)
 {
     return date('j F Y', strtotime($timestamp));
 }
 
-function format_price($price)
+function get_timestamp($timestamp)
+{
+    return date('d M Y, h:i A', strtotime($timestamp));
+}
+
+function format_price($price, $prefix = true)
 {
     $formatted_price = number_format($price, 2, ',', '.');
 
-    return 'IDR ' . $formatted_price;
+    return ($prefix ? 'IDR ' : '') . $formatted_price;
 }
