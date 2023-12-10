@@ -141,7 +141,7 @@ $send = function () {
         <!-- Directions button -->
         <a href="https://maps.app.goo.gl/h3hiz9ragrb5xsS39" target="__blank">
             <x-secondary-button
-                class="flex w-full justify-center !border-[rgb(var(--fg-rgb))] !bg-transparent hover:opacity-80">
+                class="flex w-full justify-center !border-[rgb(var(--fg-rgb))] !bg-transparent hover:opacity-80 focus:!ring-[rgb(var(--fg-rgb))]">
                 Dapat arahan
             </x-secondary-button>
         </a>

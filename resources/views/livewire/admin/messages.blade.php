@@ -8,6 +8,7 @@ layout('layouts.admin');
 
 $delete = function ($id) {
     Message::find($id)->delete();
+    $this->dispatch('close');
 };
 
 $toggleRead = function ($id) {

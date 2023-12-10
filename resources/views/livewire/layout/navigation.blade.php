@@ -110,6 +110,12 @@ $logout = function (Logout $logout) {
                                 {{ __('Profil') }}
                             </x-dropdown-link>
 
+                            @if (Auth::check() && Auth::user()->is_admin)
+                                <x-dropdown-link :href="route('admin')">
+                                    {{ __('Admin') }}
+                                </x-dropdown-link>
+                            @endif
+
                             <!-- Authentication -->
                             <button wire:click="logout" class="w-full text-start">
                                 <x-dropdown-link>
@@ -195,8 +201,15 @@ $logout = function (Logout $logout) {
                         {{ __('Profil') }}
                     </x-responsive-nav-link>
 
+                    @if (Auth::check() && Auth::user()->is_admin)
+                        <x-responsive-nav-link :href="route('admin')" class="float-in-down opacity-0 [animation-delay:0.6s]">
+                            {{ __('Admin') }}
+                        </x-responsive-nav-link>
+                    @endif
+
                     <!-- Authentication -->
-                    <button wire:click="logout" class="float-in-down w-full text-start opacity-0 [animation-delay:0.6s]">
+                    <button wire:click="logout" class="float-in-down w-full text-start opacity-0"
+                        style="animation-delay: @if (Auth::check() && Auth::user()->is_admin) 0.7s @else 0.6s @endif">
                         <x-responsive-nav-link>
                             {{ __('Keluar') }}
                         </x-responsive-nav-link>

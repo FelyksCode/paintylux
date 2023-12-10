@@ -21,6 +21,11 @@ class Order extends Model
         $this->update(['finished' => true, 'finished_at' => now()]);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function getOrderDetails()
     {
         $this->orderDetails = $this->hasMany(OrderDetail::class)
@@ -59,15 +64,82 @@ class Order extends Model
         return $weights->sum();
     }
 
+    public static function confirmed()
+    {
+        return self::where('confirmed', true)->orderByDesc('confirmed_at');
+    }
+
     public static function ongoing()
     {
-        return self::where('finished', false)->orderByDesc('confirmed_at')->get();
+        return self::confirmed()->where('finished', false)->get();
     }
 
     public static function finished()
     {
-        return self::where('finished', true)->orderByDesc('finished_at')->get();
+        return self::confirmed()->where('finished', true)->get();
     }
+
+    public static function allEarnings()
+    {
+        $subtotals = self::confirmed()->get()
+            ->map(fn ($order) => $order->totalSum());
+        return $subtotals->sum();
+    }
+
+    public static function ongoingEarnings()
+    {
+        $subtotals = self::ongoing()
+            ->map(fn ($order) => $order->totalSum());
+        return $subtotals->sum();
+    }
+
+    public static function finishedEarnings()
+    {
+        $subtotals = self::finished()
+            ->map(fn ($order) => $order->totalSum());
+        return $subtotals->sum();
+    }
+    public static function allQuantity()
+    {
+        $subtotals = self::confirmed()->get()
+            ->map(fn ($order) => $order->totalQuantity());
+        return $subtotals->sum();
+    }
+
+    public static function ongoingQuantity()
+    {
+        $subtotals = self::ongoing()
+            ->map(fn ($order) => $order->totalQuantity());
+        return $subtotals->sum();
+    }
+
+    public static function finishedQuantity()
+    {
+        $subtotals = self::finished()
+            ->map(fn ($order) => $order->totalQuantity());
+        return $subtotals->sum();
+    }
+    public static function allWeights()
+    {
+        $subtotals = self::confirmed()->get()
+            ->map(fn ($order) => $order->totalWeight());
+        return $subtotals->sum();
+    }
+
+    public static function ongoingWeights()
+    {
+        $subtotals = self::ongoing()
+            ->map(fn ($order) => $order->totalWeight());
+        return $subtotals->sum();
+    }
+
+    public static function finishedWeights()
+    {
+        $subtotals = self::finished()
+            ->map(fn ($order) => $order->totalWeight());
+        return $subtotals->sum();
+    }
+
 
     protected $fillable = ['user_id', 'confirmed', 'finished', 'confirmed_at', 'finished_at'];
 }

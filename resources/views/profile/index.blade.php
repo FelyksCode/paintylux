@@ -112,7 +112,7 @@
                                             <div class="aspect-square h-[20px] w-[20px] rounded-full border border-[rgba(var(--fg-rgb),0.4)]"
                                                 style="background-color: #{{ $detail->color->hex }}"></div>
                                             <div>{{ $detail->name() }} <span class="font-bold">({{ $detail->quantity }} x
-                                                    {{ format_price($detail->subtotal(), $prefix = false) }})</span>
+                                                    {{ format_price($detail->category->price, $prefix = false) }})</span>
                                             </div>
                                         </div>
                                     @endforeach

@@ -32,7 +32,7 @@ $toggleVerify = function ($id) {
         <x-header-count :title="__('Admin')" :count="User::admins()->count()" small />
         @forelse (User::admins() as $user)
             <x-admin.summary-box
-                class="flex flex-col space-y-8 min-[850px]:flex-row min-[850px]:items-center min-[850px]:justify-between min-[850px]:space-y-0">
+                class="flex flex-col space-y-8 px-6 min-[400px]:px-10 min-[850px]:flex-row min-[850px]:items-center min-[850px]:justify-between min-[850px]:space-y-0">
                 <div
                     class="flex flex-col space-y-4 min-[850px]:flex-row min-[850px]:items-center min-[850px]:space-x-10 min-[850px]:space-y-0">
                     <div class="space-y-4">
@@ -71,7 +71,7 @@ $toggleVerify = function ($id) {
                     </div>
                 @endunless
             </x-admin.summary-box>
-            <x-modal name="confirm-user-{{ $user->id }}-deletion" :show="$errors->isNotEmpty()" focusable>
+            <x-modal name="confirm-user-{{ $user->id }}-deletion" :show="false" focusable>
                 <div class="p-6">
                     <h2 class="text-lg font-medium">
                         {{ __('Apakah Anda yakin ingin menghapus pengguna ini?') }}

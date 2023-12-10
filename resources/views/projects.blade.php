@@ -18,7 +18,7 @@
             </div>
             <hr class="border border-[rgb(var(--fg-rgb))]">
             <div class="text-xl font-light min-[500px]:text-2xl">
-                Sudah ada {{ Project::all()->count() }} proyek yang menggunakan Paintylux.
+                Sudah ada lebih dari {{ Project::all()->count() }} proyek yang menggunakan Paintylux.
             </div>
         </div>
 
