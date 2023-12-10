@@ -11,20 +11,30 @@ use function Livewire\Volt\layout;
 use function Livewire\Volt\rules;
 use function Livewire\Volt\state;
 
-layout('layouts.guest');
+layout('layouts.app');
 
 state('token')->locked();
 
 state([
-    'email' => fn () => request()->string('email')->value(),
+    'email' => fn() => request()
+        ->string('email')
+        ->value(),
     'password' => '',
-    'password_confirmation' => ''
+    'password_confirmation' => '',
 ]);
 
 rules([
     'token' => ['required'],
-    'email' => ['required', 'string', 'email'],
-    'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+    'email' => ['required', 'string', 'regex:' . config('const.REGEXP.email')],
+    'password' => ['required', 'string', Rules\Password::defaults()],
+    'password_confirmation' => ['required', 'same:password'],
+])->messages([
+    'email.required' => 'Mohon mengisi email Anda.',
+    'email.regex' => 'Mohon mengisi email yang valid.',
+    'password' => 'Password Anda harus minimal 8 karakter.',
+    'password.required' => 'Mohon mengisi password Anda.',
+    'password_confirmation.required' => 'Password yang diisi belum sama.',
+    'password_confirmation.same' => 'Password yang diisi belum sama.',
 ]);
 
 $resetPassword = function () {
@@ -33,17 +43,16 @@ $resetPassword = function () {
     // Here we will attempt to reset the user's password. If it is successful we
     // will update the password on an actual user model and persist it to the
     // database. Otherwise we will parse the error and return the response.
-    $status = Password::reset(
-        $this->only('email', 'password', 'password_confirmation', 'token'),
-        function ($user) {
-            $user->forceFill([
+    $status = Password::reset($this->only('email', 'password', 'password_confirmation', 'token'), function ($user) {
+        $user
+            ->forceFill([
                 'password' => Hash::make($this->password),
                 'remember_token' => Str::random(60),
-            ])->save();
+            ])
+            ->save();
 
-            event(new PasswordReset($user));
-        }
-    );
+        event(new PasswordReset($user));
+    });
 
     // If the password was successfully reset, we will redirect the user back to
     // the application's home authenticated view. If there is an error we can
@@ -61,37 +70,43 @@ $resetPassword = function () {
 
 ?>
 
-<div>
+<section class="auth-section">
+    <!-- Header -->
+    <div class="text-center text-2xl font-bold min-[360px]:text-3xl sm:text-4xl">
+        {{ __('Reset Password') }}
+    </div>
+
     <form wire:submit="resetPassword">
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="username" />
+            <x-text-input wire:model="email" id="email" class="mt-1 block w-full" type="text" name="email" autofocus
+                autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            <x-text-input wire:model="password" id="password" class="mt-1 block w-full" type="password" name="password"
+                autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
 
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                          type="password"
-                          name="password_confirmation" required autocomplete="new-password" />
+            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="mt-1 block w-full"
+                type="password" name="password_confirmation" autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="mt-4 flex items-center justify-end">
             <x-primary-button>
                 {{ __('Reset Password') }}
             </x-primary-button>
         </div>
     </form>
-</div>
+</section>

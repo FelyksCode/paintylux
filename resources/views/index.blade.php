@@ -68,19 +68,21 @@ use App\Models\Project;
             </div>
             <div class="grid grid-cols-1 gap-4 min-[600px]:grid-cols-3">
                 @foreach (ProductType::allOrdered() as $type)
-                    <a href="{{ route('products.type', ['slug' => $type->slug()]) }}"
-                        class="smooth brightness-[0.6]min-[400px]: flex flex-col items-center space-y-4 opacity-0 hover:scale-105 hover:brightness-100 min-[1000px]:space-y-8"
-                        wire:navigate x-intersect="$el.classList.add('float-in-up')">
-                        <div
-                            class="flex h-full w-fit items-center justify-center rounded-xl border border-[rgb(var(--fg-rgb))] px-8 py-4 min-[600px]:h-[150px]">
-                            <img src="{{ asset(Storage::url($type->image)) }}" alt="{{ __($type->name) }}"
-                                class="float h-full w-full min-[300px]:w-[150px] min-[600px]:h-auto min-[1000px]:w-[200px]"
-                                loading="lazy" style="animation-duration: {{ 6 + $loop->index }}s">
-                        </div>
-                        <div class="text-upperwide text-center text-lg min-[1000px]:text-xl">
-                            {{ __($type->name) }}
-                        </div>
-                    </a>
+                    <div class="opacity-0" x-intersect="$el.classList.add('float-in-up')">
+                        <a href="{{ route('products.type', ['slug' => $type->slug()]) }}"
+                            class="smooth min-[400px]: flex flex-col items-center space-y-4 brightness-[0.6] hover:scale-105 hover:brightness-100 min-[1000px]:space-y-8"
+                            wire:navigate>
+                            <div
+                                class="flex h-full w-fit items-center justify-center rounded-xl border border-[rgb(var(--fg-rgb))] px-8 py-4 min-[600px]:h-[150px]">
+                                <img src="{{ asset(Storage::url($type->image)) }}" alt="{{ __($type->name) }}"
+                                    class="float h-full w-full min-[300px]:w-[150px] min-[600px]:h-auto min-[1000px]:w-[200px]"
+                                    loading="lazy" style="animation-duration: {{ 6 + $loop->index }}s">
+                            </div>
+                            <div class="text-upperwide text-center text-lg min-[1000px]:text-xl">
+                                {{ __($type->name) }}
+                            </div>
+                        </a>
+                    </div>
                 @endforeach
             </div>
         </div>

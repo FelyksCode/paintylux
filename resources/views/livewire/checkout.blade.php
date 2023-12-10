@@ -66,7 +66,7 @@ $checkout = function () {
     {{-- Orders --}}
     <section class="flex w-full flex-col space-y-6 min-[1280px]:w-[60%]">
         {{-- Header --}}
-        <x-header-count :title="__('Checkout')" :count="$this->order->totalQuantity($minified = true)" />
+        <x-header-count :title="__('Checkout')" :count="$this->exists ? $this->order->totalQuantity($minified = true) : 0" />
         <hr class="border-[rgb(var(--fg-rgb))]">
 
         @if ($this->details->count())
