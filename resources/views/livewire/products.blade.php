@@ -6,7 +6,7 @@ use App\Models\ProductCategory;
 use App\Models\Order;
 use App\Models\OrderDetail;
 
-use function Livewire\Volt\{layout, mount, state, rules, placeholder};
+use function Livewire\Volt\{layout, mount, state, rules, placeholder, computed};
 
 use Masmerise\Toaster\Toaster;
 
@@ -15,7 +15,6 @@ layout('layouts.app');
 state([
     'type' => fn($slug) => ProductType::findBySlug($slug),
     'categories' => '',
-    'colors' => Color::all(),
     'product_category_id' => '',
     'color_id' => '',
     'price' => 0,
@@ -23,6 +22,10 @@ state([
 ])->locked();
 
 state(['quantity' => 1]);
+
+$colors = computed(function () {
+    return Color::allOrdered();
+});
 
 mount(function () {
     $this->categories = $this->type->categories();

@@ -11,7 +11,9 @@ on([
 ]);
 
 $delete = function ($id) {
-    ProductType::find($id)->delete();
+    $type = ProductType::find($id);
+    $type->deleteImage();
+    $type->delete();
     $this->types = ProductType::allOrdered();
 };
 

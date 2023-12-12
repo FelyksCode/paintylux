@@ -59,12 +59,15 @@ use App\Models\Project;
                 x-intersect="$el.classList.add('float-in-up')">
                 @php
                     $colors = Color::allOrdered()->take(8);
+                    $colorsCount = $colors->count();
                 @endphp
-                @for ($i = 0; $i < 8; $i++)
-                    <div class="h-[40px] w-[40px] rounded-full shadow-lg shadow-[rgba(var(--fg-rgb),0.4)] min-[400px]:h-[60px] min-[400px]:w-[60px]"
-                        style="background-color: #{{ $colors[$i]->hex }}">
-                    </div>
-                @endfor
+                @unless ($colorsCount < 1)
+                    @for ($i = 0; $i < $colorsCount < 8 ? $colorsCount : 8; $i++)
+                        <div class="h-[40px] w-[40px] rounded-full shadow-lg shadow-[rgba(var(--fg-rgb),0.4)] min-[400px]:h-[60px] min-[400px]:w-[60px]"
+                            style="background-color: #{{ $colors[$i]->hex }}">
+                        </div>
+                    @endfor
+                @endunless
             </div>
             <div class="grid grid-cols-1 gap-4 min-[600px]:grid-cols-3">
                 @foreach (ProductType::allOrdered() as $type)

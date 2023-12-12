@@ -10,15 +10,15 @@
         <div class="space-y-8">
             <div class="space-y-1 min-[1100px]:mr-[100px]">
                 <div class="text-upperwide text-inactive text-xl min-[500px]:text-3xl">
-                    Lihat semua
+                    {{ __('Lihat Semua') }}
                 </div>
                 <div class="mb-3 text-7xl font-light tracking-tighter min-[500px]:text-9xl">
-                    Projek
+                    {{ __('Proyek') }}
                 </div>
             </div>
             <hr class="border border-[rgb(var(--fg-rgb))]">
             <div class="text-xl font-light min-[500px]:text-2xl">
-                Sudah ada lebih dari {{ Project::all()->count() }} proyek yang menggunakan Paintylux.
+                {{ __('Sudah ada lebih dari ' . Project::all()->count() . ' proyek yang menggunakan Paintylux.') }}
             </div>
         </div>
 
@@ -33,17 +33,6 @@
                         <div class="text-upperwide text-inactive text-xl font-medium">{{ $project->year }}</div>
                     </div>
                 </div>
-                {{-- <div
-                    class="group relative h-[250px] w-full overflow-hidden rounded-xl px-8 py-6 text-[rgb(var(--white-rgb))]">
-                    <div class="smooth text-3xl font-light tracking-tighter group-hover:opacity-0">
-                        {{ $project->name }}
-                    </div>
-                    <div class="text-upperwide smooth smooth text-xl font-medium opacity-75 group-hover:opacity-0">
-                        {{ $project->year }}
-                    </div>
-                    <img src="{{ asset(Storage::url($project->image)) }}" alt="{{ $project->name }}"
-                        class="smooth absolute left-0 top-0 z-[-1] h-full w-full object-cover brightness-50 group-hover:brightness-100">
-                </div> --}}
             @endforeach
         </div>
     </section>

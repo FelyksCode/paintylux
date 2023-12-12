@@ -55,7 +55,9 @@ $create = function () {
 };
 
 $delete = function ($id) {
-    Project::find($id)->delete();
+    $project = Project::find($id);
+    $project->deleteImage();
+    $project->delete();
 };
 
 ?>

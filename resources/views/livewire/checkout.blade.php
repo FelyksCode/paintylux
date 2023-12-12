@@ -23,12 +23,12 @@ mount(function () {
 $updateQuantity = function ($id, $add) {
     // Ensure order detail exists
     $orderDetail = OrderDetail::find($id);
-    if (!$orderDetail || $orderDetail->order_id !== $this->order->id) {
+    if (!$orderDetail || (int) $orderDetail->order_id !== $this->order->id) {
         return;
     }
 
     // Get current quantity
-    $currentQuantity = $orderDetail->quantity;
+    $currentQuantity = (int) $orderDetail->quantity;
 
     // Ask to delete quantity decrease and quantity is 1
     if ($currentQuantity === 1 && !$add) {

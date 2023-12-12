@@ -16,6 +16,6 @@ class Color extends Model
 
     public static function allOrdered()
     {
-        return self::orderByDesc('created_at')->get();
+        return self::orderByDesc('hex')->get();
     }
 }
