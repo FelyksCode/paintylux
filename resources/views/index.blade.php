@@ -62,7 +62,7 @@ use App\Models\Project;
                     $colorsCount = $colors->count();
                 @endphp
                 @unless ($colorsCount < 1)
-                    @for ($i = 0; $i < $colorsCount < 8 ? $colorsCount : 8; $i++)
+                    @for ($i = 0; $i < ($colorsCount < 8 ? $colorsCount : 8); $i++)
                         <div class="h-[40px] w-[40px] rounded-full shadow-lg shadow-[rgba(var(--fg-rgb),0.4)] min-[400px]:h-[60px] min-[400px]:w-[60px]"
                             style="background-color: #{{ $colors[$i]->hex }}">
                         </div>
